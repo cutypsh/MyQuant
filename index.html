@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>마이퀀트(MyQuant) | 내 투자 아이디어를 자동매매 프로그램으로</title>
+  <meta name="description" content="마이퀀트는 고객의 투자 아이디어와 매매기법을 실제로 사용할 수 있는 자동매매·보조매매 시스템으로 구현합니다. 업비트, 빗썸, 한국투자증권, 키움증권 API 연동 전문." />
+  <meta name="keywords" content="마이퀀트, MyQuant, 자동매매, 퀀트, 알고리즘, 업비트, 빗썸, 키움증권, 한국투자증권, 코인자동매매, 주식자동매매" />
+  <link rel="icon" href="./asset/CI.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body id="top">
+  <a href="#main-content" class="skip-link">본문으로 바로가기</a>
+
+  <!-- Scroll progress -->
+  <div id="progress-bar" role="progressbar" aria-label="읽기 진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+  <!-- Particles canvas -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- Back to top -->
+  <button id="back-to-top" aria-label="맨 위로 이동" title="맨 위로">↑</button>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <nav class="drawer-panel" aria-label="모바일 메뉴">
+      <a href="#about" class="drawer-link">회사소개</a>
+      <a href="#service" class="drawer-link">서비스 안내</a>
+      <a href="#products" class="drawer-link">제품 소개</a>
+      <a href="#estimator" class="drawer-link">제작 범위 가늠</a>
+      <a href="#technology" class="drawer-link">왜 맡길 수 있나요</a>
+      <a href="#process" class="drawer-link">진행 방식</a>
+      <a href="#faq" class="drawer-link">자주 묻는 질문</a>
+      <a href="#contact" class="drawer-link drawer-cta">제작 상담 →</a>
+    </nav>
+  </div>
+
+  <header id="header">
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="마이퀀트 홈">
+        <span class="logo-mark" aria-hidden="true">
+          <img src="./asset/CI.png" alt="" />
+        </span>
+        <span class="logo-text">
+          <strong>마이퀀트</strong>
+          <small>MyQuant</small>
+        </span>
+      </a>
+
+      <nav class="nav-menu" aria-label="주요 메뉴" id="nav-menu">
+        <a href="#about">회사소개</a>
+        <a href="#service">서비스 안내</a>
+        <a href="#products">제품 소개</a>
+        <a href="#technology">왜 맡길 수 있나요</a>
+        <a href="#process">진행 방식</a>
+      </nav>
+
+      <div class="nav-right">
+        <a href="#contact" class="nav-cta" id="nav-cta-btn">제작 상담</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobile-drawer" aria-label="메뉴 열기">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+
+    <!-- ── HERO ── -->
+    <section class="hero" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            마이퀀트 · 투자 아이디어 · 자동매매 시스템 제작
+          </div>
+
+          <h1 id="hero-h1">
+            <span class="hero-title-line">내 매매기법을</span>
+            <span class="hero-type-line">
+              <strong id="typing-target">자동으로 실행되는 프로그램</strong><span class="hero-type-suffix">으로.</span>
+            </span>
+          </h1>
+
+          <p class="hero-desc">
+            고객이 직접 사용하는 투자 기준, 매수·매도 규칙, 관심 종목 관리 방식,
+            알림 조건을 듣고 실제로 사용할 수 있는 자동매매 프로그램과
+            보조매매 화면으로 만들어드립니다.
+          </p>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num"><span class="count-up" data-target="9">0</span>종</div>
+              <div class="stat-label">대표 제작 예시</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-num"><span class="count-up" data-target="4">0</span>개</div>
+              <div class="stat-label">연동 거래소</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-num"><span class="count-up" data-target="100">0</span>%</div>
+              <div class="stat-label">맞춤 제작</div>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#products" class="btn btn-primary" id="hero-cta-primary">
+              제품 소개 보기
+              <span>→</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary" id="hero-cta-secondary">
+              무료 상담 신청
+            </a>
+          </div>
+
+          <p class="hero-note">
+            <span class="hero-note-icon">⚠️</span>
+            수익을 보장하지 않습니다. 반복 매매, 조건 감시, 알림, 주문 실행을 더 편하게 만드는 도구를 제작합니다.
+          </p>
+        </div>
+
+        <div class="hero-visual-space" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ── STATS DARK BAND ── -->
+    <div class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card reveal">
+            <div class="big-num"><em class="count-up" data-target="9">0</em>+</div>
+            <div class="stat-desc">대표 제작 예시</div>
+          </div>
+          <div class="stat-card reveal reveal-delay-1">
+            <div class="big-num"><em class="count-up" data-target="4">0</em>개</div>
+            <div class="stat-desc">지원 거래소·증권사</div>
+          </div>
+          <div class="stat-card reveal reveal-delay-2">
+            <div class="big-num"><em>전문</em></div>
+            <div class="stat-desc">금융·투자·IT 융합 역량</div>
+          </div>
+          <div class="stat-card reveal reveal-delay-3">
+            <div class="big-num"><em>100</em>%</div>
+            <div class="stat-desc">고객 맞춤 제작</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ABOUT ── -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-label">About</p>
+          <h2>회사소개</h2>
+          <div class="section-desc company-intro">
+            <p>
+              마이퀀트는 고객의 투자 아이디어와 매매기법을 실제로 사용할 수 있는 프로그램으로
+              만들어주는 자동매매·보조매매 시스템 제작 서비스입니다.
+            </p>
+            <p>
+              누구나 자기만의 매매 기준을 가지고 있습니다. 하지만 그 기준을 매번 감정 없이,
+              같은 방식으로, 빠르게 실행하기는 쉽지 않습니다.
+            </p>
+            <p>
+              마이퀀트는 고객의 매수·매도 기준, 관심 종목 관리 방식, 알림 조건,
+              리스크 관리 방식을 듣고 이를 프로그램이 실행할 수 있는 조건으로 정리합니다.
+              그리고 업비트, 빗썸, 한국투자증권, 키움증권 등 다양한 거래 환경과 연동해
+              자동매매 프로그램, 보조매매 화면, 조건 알림 시스템, 매매 기록 분석 도구로 구현합니다.
+            </p>
+            <p>
+              단순히 프로그램을 제작하는 것이 아니라, 고객이 자신의 매매법을 더 명확히 이해하고,
+              장단점을 확인하며, 스스로 투자 기준을 확립할 수 있도록 돕는 것이 마이퀀트의 목표입니다.
+            </p>
+          </div>
+        </div>
+
+        <article class="card founder-profile reveal reveal-delay-1">
+          <div class="founder-copy">
+            <p class="founder-kicker">Founder Profile</p>
+            <h3>대표 박상현</h3>
+            <p class="founder-lead">
+              은행권 기업금융, 주요 공제회 리스크관리와 투자심사, 액셀러레이터의
+              벤처기업 발굴·IR 심사·창업보육, 핀테크 스타트업 경영기획,
+              IPO 준비기업의 IR·Valuation·M&A 실무를 경험한 금융 자동화 전문가입니다.
+            </p>
+            <p>
+              BNK부산은행에서 기업금융과 외환 업무를 경험했고, 5대 공제회 중 하나이자
+              국내 대표 연기금 성격의 기관투자자인 경찰공제회에서는 금융·대체투자 리스크관리,
+              투자심사, 자산배분, 투자전략 업무와 13만 경찰공무원 회원을 대상으로 한
+              금융상품 기획 업무를 수행했습니다. 이후 액셀러레이터에서 투자 대상 벤처기업 발굴,
+              IR 투자심사, 창업보육 프로그램 운영을 담당했고, 투자자문 스타트업을 직접 운영하며
+              Python 기반 주가예측 모델, 로보어드바이저, 퀀트 알고리즘을 개발했습니다.
+              또한 핀테크 스타트업 COO와 IPO 준비기업 경영기획 책임자로서 사업계획,
+              IR, VC 대응, 기업가치평가, M&A 조율을 수행했습니다.
+            </p>
+          </div>
+          <div class="founder-aside">
+            <figure class="founder-photo">
+              <img src="./asset/ceo.png" alt="마이퀀트 대표 박상현 프로필 사진" loading="eager" decoding="async" />
+            </figure>
+            <div class="founder-meta">
+              <strong>박상현 대표</strong>
+              <span>금융·투자·자동화 시스템 설계</span>
+            </div>
+          </div>
+          <div class="founder-points" aria-label="대표자 핵심 역량">
+            <span>기업금융·여신·외환 실무</span>
+            <span>경찰공제회 리스크관리·투자심사·금융상품 기획</span>
+            <span>액셀러레이터 벤처기업 발굴·IR 심사·창업보육</span>
+            <span>IR·VC 대응·IPO·M&A·기업가치평가</span>
+            <span>Python 기반 퀀트 알고리즘·자동매매 개발</span>
+          </div>
+        </article>
+
+        <div class="grid-3">
+          <article class="card reveal reveal-delay-1">
+            <div class="icon">01</div>
+            <h3>기관투자자 관점의 리스크 이해</h3>
+            <p>
+              은행권 기업금융과 경찰공제회 리스크관리 업무를 통해 자금 집행, 투자 판단,
+              손실 관리, 내부 통제의 관점을 실제 금융 현장에서 익혔습니다.
+            </p>
+          </article>
+          <article class="card reveal reveal-delay-2">
+            <div class="icon">02</div>
+            <h3>투자와 사업전략을 함께 보는 시각</h3>
+            <p>
+              투자심사, IR, VC 대응, IPO, M&A, 기업가치평가 경험을 바탕으로
+              숫자와 전략, 실행 가능성을 함께 검토하는 구조화 역량을 보유하고 있습니다.
+            </p>
+          </article>
+          <article class="card reveal reveal-delay-3">
+            <div class="icon">03</div>
+            <h3>직접 구현하는 자동화 역량</h3>
+            <p>
+              Python과 거래소·증권사 API를 활용해 조건 감시, 자동 주문, 알림,
+              데이터 수집, 매매 기록 분석까지 실제 사용 가능한 도구로 구현합니다.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SERVICE ── -->
+    <section class="section" id="service">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-label">What We Do</p>
+          <h2>무엇을 해주나요?</h2>
+          <p class="section-desc">
+            고객이 머릿속으로 판단하던 매매 기준을 정리하고, 그 기준을
+            컴퓨터가 따라 할 수 있는 규칙으로 바꿉니다.
+            그리고 그 규칙을 실제 화면, 알림, 주문 기능이 있는 프로그램으로 제작합니다.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card reveal reveal-delay-1">
+            <div class="icon">01</div>
+            <h3>매매 아이디어 정리</h3>
+            <p>
+              "이럴 때 사고, 이럴 때 판다"는 고객의 매매 기준을 질문과 상담을 통해 정리합니다.
+              복잡한 말을 몰라도 됩니다. 평소 매매 방식을 설명해주시면 됩니다.
+            </p>
+          </article>
+          <article class="card reveal reveal-delay-2">
+            <div class="icon">02</div>
+            <h3>프로그램으로 구현</h3>
+            <p>
+              정리된 매매 기준을 조건 감시, 알림, 매수·매도 주문, 보유 종목 관리 기능으로 구현합니다.
+              국내주식과 코인 거래 환경에 맞춰 제작할 수 있습니다.
+            </p>
+          </article>
+          <article class="card reveal reveal-delay-3">
+            <div class="icon">03</div>
+            <h3>운영하기 쉽게 제작</h3>
+            <p>
+              프로그램은 고객이 직접 켜고 확인할 수 있어야 합니다. 화면, 버튼, 알림, 매매 기록을
+              최대한 이해하기 쉽게 구성합니다.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRODUCTS ── -->
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-label">Products</p>
+          <h2>대표 제작 예시</h2>
+          <p class="section-desc">
+            아래 9개는 자주 의뢰되는 대표 예시입니다. 여기에 없는 방식이라도 고객의 매매 기준,
+            감시 조건, 주문 방식, 리포트 구조에 맞춰 새로운 프로그램을 설계하고 제작할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="custom-build-panel reveal reveal-delay-1">
+          <div>
+            <p class="custom-build-label">Custom Build</p>
+            <h3>원하는 전략과 화면에 맞춘 신규 프로그램도 제작합니다</h3>
+            <p>
+              특정 거래소 조합, 나만의 조건식, 승인형 주문, 보유 종목 관리, 텔레그램 알림,
+              엑셀·웹 리포트 등 기존 예시에 없는 요구사항도 상담 후 맞춤형으로 구현합니다.
+            </p>
+          </div>
+          <div class="custom-build-actions">
+            <span>전략 조건 정리</span>
+            <span>화면·알림 설계</span>
+            <span>API 연동 개발</span>
+            <a href="#contact" class="custom-build-link">맞춤 제작 상담 →</a>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs reveal" id="filter-tabs" role="tablist" aria-label="대표 제작 예시 카테고리 필터">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">전체</button>
+          <button class="filter-tab" data-filter="coin" role="tab" aria-selected="false">코인 거래소</button>
+          <button class="filter-tab" data-filter="stock" role="tab" aria-selected="false">국내 주식</button>
+          <button class="filter-tab" data-filter="alert" role="tab" aria-selected="false">알림형</button>
+          <button class="filter-tab" data-filter="analysis" role="tab" aria-selected="false">분석·기록</button>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+
+          <!-- 01 업비트 -->
+          <article class="card product-card" data-category="coin" id="product-1">
+            <figure class="product-image">
+              <img src="./asset/1.png" alt="업비트 자동매매 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-coin">코인 거래소</span>
+              <div class="icon" style="margin-bottom:14px;">01</div>
+              <h3>업비트 자동매매 프로그램</h3>
+              <p>업비트 계정과 연동해 고객이 정한 코인 매매 조건을 자동으로 감시하고 주문까지 실행하는 제품입니다.</p>
+              <ul>
+                <li>관심 코인 실시간 가격 감시</li>
+                <li>매수·매도 조건 자동 판정</li>
+                <li>손절, 익절, 분할매수 기준 설정</li>
+                <li>주문 내역과 매매 결과 자동 기록</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 02 빗썸 -->
+          <article class="card product-card" data-category="coin" id="product-2">
+            <figure class="product-image">
+              <img src="./asset/2.png" alt="빗썸 자동매매 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-coin">코인 거래소</span>
+              <div class="icon" style="margin-bottom:14px;">02</div>
+              <h3>빗썸 자동매매 프로그램</h3>
+              <p>빗썸 거래 환경에 맞춰 코인 후보 감시, 조건 충족 알림, 자동 주문을 구현하는 제품입니다.</p>
+              <ul>
+                <li>빗썸 상장 코인 조건 감시</li>
+                <li>고객 매매법에 맞춘 진입·청산 규칙</li>
+                <li>급등락, 거래대금, 가격 변동 알림</li>
+                <li>자동매매 또는 반자동 확인 방식 선택</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 03 스프레드 -->
+          <article class="card product-card" data-category="coin" id="product-3">
+            <figure class="product-image">
+              <img src="./asset/3.png" alt="업비트·빗썸 스프레드 모니터링 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-coin">코인 거래소</span>
+              <div class="icon" style="margin-bottom:14px;">03</div>
+              <h3>업비트·빗썸 스프레드 모니터링</h3>
+              <p>업비트와 빗썸의 같은 코인 가격 차이, 프리미엄, 괴리율을 실시간으로 비교해 보여주는 제품입니다.</p>
+              <ul>
+                <li>거래소 간 가격 차이 실시간 비교</li>
+                <li>스프레드 기준 초과 시 알림</li>
+                <li>관심 코인별 괴리율 순위 표시</li>
+                <li>차익 기회 모니터링 화면 구성</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 04 한투 -->
+          <article class="card product-card" data-category="stock" id="product-4">
+            <figure class="product-image">
+              <img src="./asset/4.png" alt="한국투자증권 자동매매 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-stock">국내 주식</span>
+              <div class="icon" style="margin-bottom:14px;">04</div>
+              <h3>한국투자증권 자동매매 프로그램</h3>
+              <p>한국투자증권 API와 연동해 국내주식 조건검색, 시세 감시, 매수·매도 주문을 자동화하는 제품입니다.</p>
+              <ul>
+                <li>국내주식 조건검색 결과 연동</li>
+                <li>실시간 시세와 체결 상태 감시</li>
+                <li>손절, 익절, 재진입 차단 설정</li>
+                <li>장중 알림과 매매 기록 저장</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 05 키움 -->
+          <article class="card product-card" data-category="stock" id="product-5">
+            <figure class="product-image">
+              <img src="./asset/5.png" alt="키움증권 자동매매 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-stock">국내 주식</span>
+              <div class="icon" style="margin-bottom:14px;">05</div>
+              <h3>키움증권 자동매매 프로그램</h3>
+              <p>키움증권 OpenAPI 기반으로 고객의 주식 매매 조건을 화면과 주문 기능으로 구현하는 제품입니다.</p>
+              <ul>
+                <li>키움 조건검색식 기반 후보 감시</li>
+                <li>관심 종목, 보유 종목, 주문 상태 표시</li>
+                <li>매수·매도 후보 알림 및 자동 주문</li>
+                <li>사용자 기준에 맞춘 화면 구성</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 06 테마주 -->
+          <article class="card product-card" data-category="stock" id="product-6">
+            <figure class="product-image">
+              <img src="./asset/6.png" alt="테마주 모니터링 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-stock">국내 주식</span>
+              <div class="icon" style="margin-bottom:14px;">06</div>
+              <h3>테마주 모니터링 프로그램</h3>
+              <p>국내주식 테마, 섹터, 관련 종목 흐름을 한눈에 확인하고 강한 테마를 빠르게 찾는 보조매매 제품입니다.</p>
+              <ul>
+                <li>테마별 상승 종목 자동 분류</li>
+                <li>강한 테마와 주도 종목 표시</li>
+                <li>관심 테마 조건 충족 시 알림</li>
+                <li>매수 판단을 돕는 보조 화면 제공</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 07 조건식 알림 -->
+          <article class="card product-card" data-category="alert" id="product-7">
+            <figure class="product-image">
+              <img src="./asset/7.png" alt="조건식 알림 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-alert">알림형</span>
+              <div class="icon" style="margin-bottom:14px;">07</div>
+              <h3>조건식 알림 프로그램</h3>
+              <p>자동 주문은 하지 않고, 고객이 정한 조건에 맞는 종목이 나타났을 때 즉시 알려주는 알림형 제품입니다.</p>
+              <ul>
+                <li>가격, 거래량, 등락률 조건 감시</li>
+                <li>조건 충족 종목 실시간 알림</li>
+                <li>매수 후보와 매도 후보 분리 표시</li>
+                <li>초보 고객도 부담 없는 반자동 방식</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 08 리스크 관리 -->
+          <article class="card product-card" data-category="alert" id="product-8">
+            <figure class="product-image">
+              <img src="./asset/8.png" alt="보유 종목 리스크 관리 프로그램 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-alert">알림형</span>
+              <div class="icon" style="margin-bottom:14px;">08</div>
+              <h3>보유 종목 리스크 관리 프로그램</h3>
+              <p>보유 중인 주식이나 코인의 손익, 손절선, 익절 목표, 위험 상태를 계속 감시하는 관리형 제품입니다.</p>
+              <ul>
+                <li>보유 종목 수익률 실시간 확인</li>
+                <li>손절선·익절선 접근 알림</li>
+                <li>급락, VI, 변동성 확대 구간 감시</li>
+                <li>감정적 매매를 줄이는 관리 화면</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- 09 매매 기록 -->
+          <article class="card product-card" data-category="analysis" id="product-9">
+            <figure class="product-image">
+              <img src="./asset/9.png" alt="매매 기록 분석 리포트 화면" loading="eager" decoding="async" />
+            </figure>
+            <div class="product-body">
+              <span class="product-tag tag-analysis">분석·기록</span>
+              <div class="icon" style="margin-bottom:14px;">09</div>
+              <h3>매매 기록 분석 리포트</h3>
+              <p>매매가 끝난 뒤 어떤 조건에서 사고팔았는지 자동으로 정리하고 다음 전략 개선점을 보여주는 제품입니다.</p>
+              <ul>
+                <li>일별 매수·매도 내역 자동 정리</li>
+                <li>손절·익절·보유 실패 원인 확인</li>
+                <li>종목별, 전략별 결과 비교</li>
+                <li>다음 매매를 위한 개선 포인트 정리</li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCOPE ESTIMATOR ── -->
+    <section class="section estimator-section" id="estimator">
+      <div class="container estimator-inner">
+        <div class="reveal">
+          <div class="estimator-header">
+            <p class="section-label">Scope</p>
+            <h2>어떤 제작이 필요한지 빠르게 가늠해보세요</h2>
+            <p class="section-desc">
+              필요한 기능을 눌러보면 예상 제작 범위와 기간이 바뀝니다.
+              실제 견적은 거래소, 주문 방식, 위험 제한 조건을 확인한 뒤 확정합니다.
+            </p>
+          </div>
+
+          <div class="estimator-options" aria-label="필요 기능 선택">
+            <button class="est-option" type="button" data-feature="order" data-weight="3" aria-pressed="false">
+              <span class="est-checkbox" aria-hidden="true"></span>
+              <span class="est-opt-text">
+                <h4>자동 주문 실행</h4>
+                <p>조건 충족 시 매수·매도 주문까지 자동 처리</p>
+              </span>
+            </button>
+            <button class="est-option" type="button" data-feature="monitor" data-weight="2" aria-pressed="false">
+              <span class="est-checkbox" aria-hidden="true"></span>
+              <span class="est-opt-text">
+                <h4>실시간 조건 감시</h4>
+                <p>가격, 거래량, 지표, 보유 종목 상태를 계속 확인</p>
+              </span>
+            </button>
+            <button class="est-option" type="button" data-feature="alert" data-weight="2" aria-pressed="false">
+              <span class="est-checkbox" aria-hidden="true"></span>
+              <span class="est-opt-text">
+                <h4>알림과 승인형 매매</h4>
+                <p>텔레그램·카카오톡·이메일 알림 후 사람이 최종 결정</p>
+              </span>
+            </button>
+            <button class="est-option" type="button" data-feature="report" data-weight="3" aria-pressed="false">
+              <span class="est-checkbox" aria-hidden="true"></span>
+              <span class="est-opt-text">
+                <h4>매매 기록과 리포트</h4>
+                <p>전략별 성과, 실패 원인, 개선 포인트를 자동 정리</p>
+              </span>
+            </button>
+            <button class="est-option" type="button" data-feature="multi" data-weight="4" aria-pressed="false">
+              <span class="est-checkbox" aria-hidden="true"></span>
+              <span class="est-opt-text">
+                <h4>거래소·증권사 복수 연동</h4>
+                <p>업비트, 빗썸, 키움, 한국투자증권 등 여러 API 연동</p>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <aside class="estimator-result reveal reveal-delay-2" aria-label="제작 범위 결과">
+          <div class="est-result-body">
+            <div>
+              <p class="est-label">추천 형태</p>
+              <div class="est-value highlight" id="est-product">상담을 통해 최적 제품 추천</div>
+            </div>
+            <div class="est-divider"></div>
+            <div class="est-row">
+              <div>
+                <p class="est-label">복잡도</p>
+                <div class="est-value" id="est-complexity">미선택 (상담 후 결정)</div>
+              </div>
+            </div>
+            <div>
+              <div class="est-row">
+                <p class="est-label">예상 제작 기간</p>
+                <div class="est-value" id="est-duration">—</div>
+              </div>
+              <div class="est-progress-track" aria-hidden="true">
+                <div class="est-progress-fill" id="est-progress-fill"></div>
+              </div>
+            </div>
+            <button class="est-cta" type="button" id="est-cta-btn">이 범위로 상담하기</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ── TECHNOLOGY / TRUST ── -->
+    <section class="section" id="technology">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-label">Trust</p>
+          <h2>왜 맡길 수 있나요?</h2>
+          <p class="section-desc">
+            단순히 화면만 만드는 것이 아니라, 실제 매매에서 문제가 되는 주문, 체결, 미체결,
+            손절, 알림, 기록 관리까지 고려해 프로그램을 설계합니다.
+          </p>
+        </div>
+
+        <div class="trust-box reveal">
+          <div>
+            <h2>매매를 이해하고,<br />프로그램으로 구현합니다</h2>
+            <p class="section-desc" style="margin-top:16px;">
+              고객의 매매법을 그대로 듣고 끝내지 않습니다. 실제로 컴퓨터가 판단할 수 있는 조건인지,
+              자동화했을 때 위험한 부분은 없는지 함께 정리합니다.
+            </p>
+            <div class="badge-row">
+              <span class="badge">국내주식</span>
+              <span class="badge">코인</span>
+              <span class="badge">조건 감시</span>
+              <span class="badge">자동 주문</span>
+              <span class="badge">알림</span>
+              <span class="badge">매매 기록</span>
+            </div>
+          </div>
+          <div class="trust-list">
+            <div class="trust-item">고객의 매매 기준을 프로그램 조건으로 정리</div>
+            <div class="trust-item">국내주식·코인 거래소와 프로그램 연동</div>
+            <div class="trust-item">관심 종목, 조건 충족 종목, 보유 종목 화면 구성</div>
+            <div class="trust-item">손절, 익절, 알림, 주문 제한 같은 안전장치 반영</div>
+            <div class="trust-item">매매 후 기록과 복기 자료를 보기 쉽게 정리</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROCESS ── -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-label">Process</p>
+          <h2>진행 방식</h2>
+          <p class="section-desc">
+            처음부터 어려운 개발 용어를 몰라도 됩니다. 고객의 매매 방식을 듣고,
+            자동화할 수 있는 부분과 사람이 직접 판단해야 하는 부분을 나눈 뒤 제작합니다.
+          </p>
+        </div>
+
+        <div class="process-grid process">
+          <article class="card process-card reveal reveal-delay-1">
+            <div class="step-num">1</div>
+            <h3>매매 방식 상담</h3>
+            <p>어떤 시장을 보는지, 언제 사고파는지, 어떤 조건을 중요하게 보는지 쉽게 설명해주시면 됩니다.</p>
+          </article>
+          <article class="card process-card reveal reveal-delay-2">
+            <div class="step-num">2</div>
+            <h3>자동화 범위 정리</h3>
+            <p>자동으로 할 부분, 알림만 받을 부분, 사람이 직접 결정할 부분을 나누어 정리합니다.</p>
+          </article>
+          <article class="card process-card reveal reveal-delay-3">
+            <div class="step-num">3</div>
+            <h3>화면과 기능 설계</h3>
+            <p>고객이 실제로 볼 화면, 버튼, 알림 문구, 매매 기록 방식을 먼저 정합니다.</p>
+          </article>
+          <article class="card process-card reveal reveal-delay-1">
+            <div class="step-num">4</div>
+            <h3>프로그램 제작</h3>
+            <p>정리된 내용을 바탕으로 조건 감시, 알림, 주문, 기록 기능을 개발합니다.</p>
+          </article>
+          <article class="card process-card reveal reveal-delay-2">
+            <div class="step-num">5</div>
+            <h3>테스트 운영</h3>
+            <p>처음에는 실제 주문 없이 신호와 알림이 의도대로 나오는지 확인합니다.</p>
+          </article>
+          <article class="card process-card reveal reveal-delay-3">
+            <div class="step-num">6</div>
+            <h3>실전 적용과 개선</h3>
+            <p>필요하면 소액부터 적용하고, 사용하면서 불편한 점과 조건을 계속 다듬습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="section faq-section" id="faq">
+      <div class="container faq-grid">
+        <aside class="faq-side-card reveal">
+          <h3>상담 전에 자주 확인하는 내용</h3>
+          <p>
+            자동매매는 수익 보장 도구가 아니라, 반복 판단과 실행을 정확히 줄여주는 운영 도구입니다.
+            시작 전 자동화 범위와 위험 제한을 함께 정합니다.
+          </p>
+          <div class="faq-contact-list">
+            <a href="#contact" class="faq-contact-item">
+              <span class="faq-contact-icon" aria-hidden="true">↗</span>
+              제작 상담으로 이동
+            </a>
+            <a href="mailto:contact@myquant.kr" class="faq-contact-item">
+              <span class="faq-contact-icon" aria-hidden="true">@</span>
+              이메일 문의하기
+            </a>
+          </div>
+        </aside>
+
+        <div class="faq-list reveal reveal-delay-2">
+          <article class="faq-item active">
+            <button class="faq-trigger" type="button" aria-expanded="true" aria-controls="faq-a1">
+              자동매매를 처음 써도 괜찮나요?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-content" id="faq-a1">
+              <p>
+                가능합니다. 처음에는 자동 주문보다 조건 감시와 알림형 프로그램으로 시작하고,
+                테스트 운영을 거쳐 필요한 부분만 자동화하는 방식으로 진행할 수 있습니다.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-a2">
+              제 매매법이 프로그램으로 구현 가능한지 모르겠습니다
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-content" id="faq-a2">
+              <p>
+                상담 단계에서 매수·매도 기준을 질문으로 풀어내고, 컴퓨터가 판단할 수 있는 조건과
+                사람이 직접 결정해야 하는 조건을 나누어 정리합니다.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-a3">
+              실제 주문 전에 테스트할 수 있나요?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-content" id="faq-a3">
+              <p>
+                네. 실전 주문을 켜기 전 신호 발생, 알림, 기록 저장이 의도대로 동작하는지 먼저 확인하고,
+                필요하면 소액 또는 승인형 방식으로 전환합니다.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-a4">
+              수익률을 보장하나요?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-content" id="faq-a4">
+              <p>
+                보장하지 않습니다. 제작 범위는 반복 감시, 알림, 주문 실행, 기록 정리이며,
+                투자 판단과 손실 위험은 고객의 전략과 시장 상황에 따라 달라집니다.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section" id="contact">
+      <div class="container">
+        <div class="cta-box reveal">
+          <div class="cta-orb cta-orb-1"></div>
+          <div class="cta-orb cta-orb-2"></div>
+          <h2>내 매매법을 프로그램으로 만들고 싶다면</h2>
+          <p>
+            복잡한 개발 용어는 몰라도 됩니다.<br />
+            평소 매매 방식을 설명해주시면 제작 가능 여부와 방향을 정리해드립니다.
+          </p>
+          <div class="cta-actions">
+            <a href="mailto:contact@myquant.kr" class="btn btn-cta-primary" id="cta-email-btn">
+              📧 이메일로 문의하기
+            </a>
+            <a href="https://open.kakao.com/o/example" class="btn btn-cta-secondary" id="cta-kakao-btn" target="_blank" rel="noopener">
+              💬 카카오톡 문의
+            </a>
+          </div>
+          <div class="cta-assurance">
+            <span class="assurance-item">
+              <span class="assurance-icon">✓</span>
+              무료 초기 상담
+            </span>
+            <span class="assurance-item">
+              <span class="assurance-icon">✓</span>
+              비밀 유지 보장
+            </span>
+            <span class="assurance-item">
+              <span class="assurance-icon">✓</span>
+              맞춤 제작 견적
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <span class="footer-logo-mark" aria-hidden="true">
+          <img src="./asset/CI.png" alt="" />
+        </span>
+        <span>마이퀀트 <small>MyQuant</small></span>
+      </div>
+      <div class="footer-links">
+        <a href="#about">회사소개</a>
+        <a href="#products">제품소개</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">상담문의</a>
+      </div>
+      <span style="color:var(--muted);font-size:13px;">© 2026 MyQuant. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="./main.js" defer></script>
+</body>
+</html>
