@@ -1854,6 +1854,15 @@ h2 {
 }
 .btn-cta-secondary:hover { background: rgba(255,255,255,0.22); }
 
+.btn-disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+.btn-disabled:hover {
+  transform: none;
+}
+
 /* ── FOOTER ── */
 footer {
   border-top: 1px solid rgba(15,23,42,0.08);

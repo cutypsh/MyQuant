@@ -508,11 +508,13 @@
     showToast('상담 섹션으로 이동합니다', '🤝');
   });
   document.getElementById('cta-email-btn')?.addEventListener('click', () => {
-    showToast('이메일 앱을 열고 있습니다...', '📧');
+    showToast('ideal84@naver.com으로 이메일 앱을 엽니다', '📧');
+  });
+  document.getElementById('cta-phone-btn')?.addEventListener('click', () => {
+    showToast('010-4752-8421로 전화 앱을 엽니다', '☎');
   });
   document.getElementById('cta-kakao-btn')?.addEventListener('click', e => {
-    e.preventDefault();
-    showToast('카카오톡 오픈채팅으로 연결됩니다', '💬');
+    showToast('카카오톡 오픈채팅으로 연결합니다', '💬');
   });
 
   /* ════════════════════════════════════
