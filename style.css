@@ -354,7 +354,7 @@ header.scrolled {
       rgba(247,250,255,0.72) 52%,
       rgba(247,250,255,0.18) 74%,
       rgba(247,250,255,0.02) 100%),
-    url("./first.png");
+    url("./asset/first.png");
   background-size: cover;
   background-position: center right;
 }
@@ -759,10 +759,15 @@ h1 {
 .stat-card .big-num {
   font-size: 44px;
   font-weight: 900;
-  letter-spacing: -0.06em;
+  letter-spacing: 0;
   color: #fff;
   line-height: 1;
   margin-bottom: 8px;
+}
+
+.stat-card.text-stat .big-num {
+  font-size: 34px;
+  letter-spacing: 0;
 }
 
 .stat-card .big-num em {
@@ -776,7 +781,8 @@ h1 {
 .stat-card .stat-desc {
   font-size: 13.5px;
   color: rgba(255,255,255,0.6);
-  font-weight: 500;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 /* ════════════════════════════════════
@@ -1489,39 +1495,41 @@ h2 {
   margin-bottom: 28px;
 }
 
-.faq-contact-list {
+.faq-principle-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.faq-contact-item {
+.faq-principle-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  padding: 14px 18px;
+  padding: 15px 18px;
   border-radius: 14px;
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.1);
   color: #fff;
-  font-weight: 700;
-  font-size: 14.5px;
-  transition: all 0.2s ease;
 }
 
-.faq-contact-item:hover {
-  background: rgba(255,255,255,0.13);
-  transform: translateX(4px);
-}
-
-.faq-contact-icon {
-  width: 36px; height: 36px;
+.faq-principle-item strong {
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
   background: rgba(255,255,255,0.12);
   display: grid;
   place-items: center;
-  font-size: 16px;
+  color: #8bdcff;
+  font-size: 12px;
+  font-weight: 900;
   flex-shrink: 0;
+}
+
+.faq-principle-item span {
+  color: rgba(255,255,255,0.84);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 /* ════════════════════════════════════
@@ -1969,12 +1977,14 @@ h2 {
   box-shadow: 0 0 0 4px rgba(37,99,235,0.1);
 }
 
-.form-checks {
+.form-checks,
+.contact-method {
   border: 0;
   padding: 0;
 }
 
-.form-checks legend {
+.form-checks legend,
+.contact-method legend {
   margin-bottom: 10px;
 }
 
@@ -1983,7 +1993,13 @@ h2 {
   gap: 8px;
 }
 
-.form-checks label {
+.contact-method {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.form-checks label,
+.contact-method label {
   display: flex;
   align-items: center;
   gap: 7px;
@@ -1997,11 +2013,26 @@ h2 {
   font-weight: 800;
 }
 
-.form-checks input {
+.contact-method label {
+  cursor: pointer;
+}
+
+.form-checks input,
+.contact-method input {
   width: 15px;
   height: 15px;
   box-shadow: none;
   accent-color: var(--primary);
+  flex-shrink: 0;
+  padding: 0;
+  min-height: 0;
+}
+
+.contact-method label:has(input:checked) {
+  color: var(--primary);
+  background: rgba(37,99,235,0.1);
+  border-color: rgba(37,99,235,0.34);
+  box-shadow: 0 10px 24px rgba(37,99,235,0.1);
 }
 
 .form-actions {
@@ -2216,7 +2247,7 @@ footer {
         rgba(247,250,255,0.94) 42%,
         rgba(247,250,255,0.78) 70%,
         rgba(247,250,255,0.36) 100%),
-      url("./first.png");
+      url("./asset/first.png");
     background-position: center bottom;
   }
   .hero-copy       { max-width: 640px; margin-left: 0; }
@@ -2246,6 +2277,7 @@ footer {
   .consult-card  { padding: 24px; border-radius: 22px; }
   .form-row,
   .form-checks,
+  .contact-method,
   .safety-strip  { grid-template-columns: 1fr; }
   #toast-container { right: 16px; bottom: 96px; }
   #back-to-top   { left: 16px; bottom: 86px; }

@@ -531,7 +531,7 @@
     const formData = new FormData(consultationForm);
     const subject = `[마이퀀트 상담 요청] ${formData.get('market')} / ${formData.get('platform')}`;
     const body = getConsultationMessage();
-    window.location.href = `mailto:ideal84@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:betterpsh@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     showToast('상담 내용이 이메일 본문으로 정리됩니다', '📧');
   });
 
@@ -564,7 +564,7 @@
     showToast('상담 섹션으로 이동합니다', '🤝');
   });
   document.getElementById('cta-email-btn')?.addEventListener('click', () => {
-    showToast('ideal84@naver.com으로 이메일 앱을 엽니다', '📧');
+    showToast('betterpsh@gmail.com으로 이메일 앱을 엽니다', '📧');
   });
   document.getElementById('cta-phone-btn')?.addEventListener('click', () => {
     showToast('010-4752-8421로 전화 앱을 엽니다', '☎');
