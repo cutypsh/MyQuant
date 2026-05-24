@@ -480,7 +480,8 @@
   /* Estimator CTA button */
   document.getElementById('est-cta-btn')?.addEventListener('click', () => {
     showToast('상담 섹션으로 이동합니다 🤝', '📋');
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    const target = document.getElementById('consultation-brief') || document.getElementById('contact');
+    target?.scrollIntoView({ behavior: 'smooth' });
   });
 
   /* ════════════════════════════════════
@@ -500,6 +501,61 @@
     }, duration);
   }
 
+  /* Consultation brief form */
+  const consultationForm = document.getElementById('consultation-form');
+  const consultCopyBtn = document.getElementById('consult-copy-btn');
+
+  function getConsultationMessage() {
+    if (!consultationForm) return '';
+    const formData = new FormData(consultationForm);
+    const needs = formData.getAll('needs');
+
+    return [
+      '[마이퀀트 상담 요청]',
+      '',
+      `거래 시장: ${formData.get('market') || '미선택'}`,
+      `연동 환경: ${formData.get('platform') || '미선택'}`,
+      `필요 기능: ${needs.length ? needs.join(', ') : '미선택'}`,
+      '',
+      `매수 조건: ${formData.get('buyRule') || '상담 시 설명 예정'}`,
+      `매도·손절 기준: ${formData.get('sellRule') || '상담 시 설명 예정'}`,
+      '',
+      `연락 방법: ${formData.get('contactMethod') || '미입력'}`
+    ].join('\n');
+  }
+
+  consultationForm?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!consultationForm.reportValidity()) return;
+
+    const formData = new FormData(consultationForm);
+    const subject = `[마이퀀트 상담 요청] ${formData.get('market')} / ${formData.get('platform')}`;
+    const body = getConsultationMessage();
+    window.location.href = `mailto:ideal84@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    showToast('상담 내용이 이메일 본문으로 정리됩니다', '📧');
+  });
+
+  consultCopyBtn?.addEventListener('click', async () => {
+    const body = getConsultationMessage();
+    if (!body) return;
+
+    try {
+      await navigator.clipboard.writeText(body);
+      showToast('상담 내용이 복사되었습니다', '✓');
+    } catch {
+      const fallback = document.createElement('textarea');
+      fallback.value = body;
+      fallback.setAttribute('readonly', '');
+      fallback.style.position = 'fixed';
+      fallback.style.opacity = '0';
+      document.body.appendChild(fallback);
+      fallback.select();
+      document.execCommand('copy');
+      fallback.remove();
+      showToast('상담 내용이 복사되었습니다', '✓');
+    }
+  });
+
   /* CTA button toasts */
   document.getElementById('hero-cta-primary')?.addEventListener('click', () => {
     showToast('제품 소개 섹션으로 이동합니다', '📦');
@@ -513,8 +569,17 @@
   document.getElementById('cta-phone-btn')?.addEventListener('click', () => {
     showToast('010-4752-8421로 전화 앱을 엽니다', '☎');
   });
-  document.getElementById('cta-kakao-btn')?.addEventListener('click', e => {
+  document.getElementById('cta-kakao-btn')?.addEventListener('click', () => {
     showToast('카카오톡 오픈채팅으로 연결합니다', '💬');
+  });
+  document.getElementById('quick-phone-btn')?.addEventListener('click', () => {
+    showToast('010-4752-8421로 전화 앱을 엽니다', '☎');
+  });
+  document.getElementById('quick-kakao-btn')?.addEventListener('click', () => {
+    showToast('카카오톡 오픈채팅으로 연결합니다', '💬');
+  });
+  document.getElementById('quick-form-btn')?.addEventListener('click', () => {
+    showToast('상담 작성으로 이동합니다', '✎');
   });
 
   /* ════════════════════════════════════
