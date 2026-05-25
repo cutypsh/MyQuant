@@ -227,13 +227,13 @@
 
   const tradeMessages = [
     { msg: '[감시] BTC RSI(14) 28.3 진입 (과매도 구간)', type: 'info' },
-    { msg: '[주문] 업비트 BTC 분할매수 1차 실행', type: 'buy' },
-    { msg: '[체결] 매수 체결 완료 — 0.012 BTC', type: 'buy' },
+    { msg: '[알림] 업비트 BTC 분할매수 후보 확인 요청', type: 'buy' },
+    { msg: '[승인] 매수 주문 대기 — 0.012 BTC', type: 'buy' },
     { msg: '[감시] ETH 볼린저 하단 터치 감지', type: 'info' },
-    { msg: '[주문] 익절 목표 +8.5% 도달 — 매도 실행', type: 'sell' },
-    { msg: '[체결] 빗썸 BTC 매도 체결 완료', type: 'sell' },
+    { msg: '[알림] 익절 목표 +8.5% 도달 — 매도 확인 요청', type: 'sell' },
+    { msg: '[기록] 빗썸 BTC 매도 후보 저장 완료', type: 'sell' },
     { msg: '[감시] MACD 골든크로스 신호 발생', type: 'info' },
-    { msg: '[주문] 한투 삼성전자 조건 충족 — 매수 실행', type: 'buy' },
+    { msg: '[알림] 한투 삼성전자 조건 충족 — 승인 대기', type: 'buy' },
   ];
 
   let logIdx = 0;
@@ -293,15 +293,16 @@
      8. TYPING ANIMATION (Hero H1)
      ════════════════════════════════════ */
   const phrases = [
-    '자동으로 실행되는 프로그램',
-    '24시간 감시하는 알림 시스템',
-    '수익률을 기록하는 분석 도구',
-    '내 매매기법을 따르는 봇',
+    '매매 알림 시스템부터 시작할 수 있습니다.',
+    '조건 감시 시스템부터 시작할 수 있습니다.',
+    '리스크 관리 도구부터 시작할 수 있습니다.',
+    '주문 보조 화면부터 시작할 수 있습니다.',
   ];
 
   const typingTarget = document.getElementById('typing-target');
   if (typingTarget) {
-    let phraseIdx = 0, charIdx = 0, deleting = false;
+    typingTarget.textContent = phrases[0];
+    let phraseIdx = 0, charIdx = phrases[0].length, deleting = false;
 
     /* Blinking cursor */
     const cursor = document.createElement('span');
@@ -323,13 +324,13 @@
         charIdx++;
         typingTarget.textContent = current.slice(0, charIdx);
         if (charIdx >= current.length) {
-          setTimeout(() => { deleting = true; type(); }, 2200);
+          setTimeout(() => { deleting = true; type(); }, 1800);
           return;
         }
       }
-      setTimeout(type, deleting ? 40 : 68);
+      setTimeout(type, deleting ? 38 : 62);
     }
-    setTimeout(type, 1100);
+    setTimeout(() => { deleting = true; type(); }, 1700);
   }
 
   /* ════════════════════════════════════
@@ -359,7 +360,8 @@
       const filter = tab.dataset.filter;
       let idx = 0;
       productCards.forEach(card => {
-        const show = filter === 'all' || card.dataset.category === filter;
+        const categories = (card.dataset.category || '').split(/\s+/);
+        const show = filter === 'all' || categories.includes(filter);
         if (show) {
           card.classList.remove('hidden');
           setTimeout(() => card.classList.add('visible'), idx * 65);
@@ -370,8 +372,17 @@
         }
       });
 
-      const labels = { all: '전체', coin: '코인 거래소', stock: '국내 주식', alert: '알림형', analysis: '분석·기록' };
-      showToast((labels[filter] || filter) + ' 제품을 표시합니다', '🔍');
+      const labels = {
+        all: '전체',
+        coin: '코인',
+        stock: '국내주식',
+        alert: '알림',
+        monitoring: '모니터링',
+        analysis: '분석·복기',
+        module: '모듈 조합',
+        automation: '자동화'
+      };
+      showToast((labels[filter] || filter) + ' 기능을 표시합니다', '검색');
     });
   });
 
@@ -426,45 +437,121 @@
   const estDuration      = document.getElementById('est-duration');
   const estProduct       = document.getElementById('est-product');
   const estProgressFill  = document.getElementById('est-progress-fill');
+  const estMarket        = document.getElementById('est-market');
+  const estCount         = document.getElementById('est-count');
+  const moduleNodes      = document.querySelectorAll('.module-node[data-node]');
+  const moduleChipRow    = document.getElementById('module-chip-row');
 
   function updateEstimator() {
     const active   = [...estimatorOptions].filter(o => o.classList.contains('active'));
     const count    = active.length;
     const weight   = active.reduce((s, o) => s + parseInt(o.dataset.weight || '2', 10), 0);
     const features = new Set(active.map(o => o.dataset.feature));
-    const baseDays = 4 + weight;
+    const groups   = new Set(active.map(o => o.dataset.group).filter(Boolean));
+    const markets  = new Set(active.map(o => o.dataset.market).filter(m => m && m !== 'shared'));
+    const visualNodes = new Set(['map']);
 
-    let complexity, product, pct;
-    if (count === 0) {
-      complexity = '미선택 (상담 후 결정)';
-      product    = '상담을 통해 최적 제품 추천';
-      pct        = 10;
-    } else if (features.has('multi') || count >= 4 || weight >= 10) {
-      complexity = '최고 사양 (Custom Engine)';
-      product    = '종합 자동매매 대시보드 패키지';
-      pct        = 100;
-    } else if (features.has('order') && features.has('monitor')) {
-      complexity = '고급형 (Advanced)';
-      product    = '자동 주문 + 보유 종목 감시봇';
-      pct        = 70;
-    } else if (features.has('order')) {
-      complexity = '고급형 (Advanced)';
-      product    = '자동 주문형 매매 프로그램';
-      pct        = 62;
-    } else if (features.has('report')) {
-      complexity = '기본형 (Standard)';
-      product    = '매매 기록 분석 리포트';
-      pct        = 44;
-    } else {
-      complexity = '기본형 (Standard)';
-      product    = '알림형 보조 프로그램';
-      pct        = 35 + Math.min(weight * 6, 22);
+    active.forEach(option => {
+      (option.dataset.node || '').split(',').map(v => v.trim()).filter(Boolean).forEach(node => visualNodes.add(node));
+      (option.dataset.implies || '').split(',').map(v => v.trim()).filter(Boolean).forEach(node => visualNodes.add(node));
+    });
+
+    if (groups.has('watch')) visualNodes.add('watch');
+    if (groups.has('notify')) {
+      visualNodes.add('watch');
+      visualNodes.add('notify');
+    }
+    if (groups.has('guard')) {
+      visualNodes.add('watch');
+      visualNodes.add('guard');
+    }
+    if (groups.has('report')) visualNodes.add('report');
+    if (groups.has('trade')) {
+      visualNodes.add('watch');
+      visualNodes.add('notify');
+      visualNodes.add('approve');
+      visualNodes.add('trader');
     }
 
+    if (features.has('coin-order')) markets.add('coin');
+    if (features.has('stock-order')) markets.add('stock');
+    if (markets.has('coin')) visualNodes.add('coin');
+    if (markets.has('stock')) visualNodes.add('stock');
+
+    const marketLabel = markets.size === 0
+      ? '시장 미선택'
+      : [
+          markets.has('coin') ? '코인' : '',
+          markets.has('stock') ? '국내주식' : ''
+        ].filter(Boolean).join(' + ');
+    const scopeLabel = markets.size === 0 ? '공통' : marketLabel;
+
+    const hasOrder = groups.has('trade');
+    const hasRisk = groups.has('guard');
+    const hasVerify = groups.has('report');
+    const hasNotify = groups.has('notify');
+    const hasWatch = groups.has('watch') || hasNotify || hasRisk || hasOrder;
+    const hasConnect = groups.has('connect') || markets.size > 0;
+
+    let complexity, product, duration;
+    if (count === 0) {
+      complexity = '먼저 코인인지 국내주식인지, 어떤 조건을 놓치고 싶은지 정합니다';
+      product    = '전략 조건표만 선택된 상태';
+      duration   = 'Map 단계부터 시작';
+    } else if (hasOrder) {
+      complexity = '주문 기능은 감시, 알림, 승인, 리스크 기준을 확인한 뒤 적용 여부를 정합니다';
+      product    = `${scopeLabel} 주문 보조 확장 조합`;
+      duration   = '실제 주문 전 모의운영 권장';
+    } else if (hasRisk && hasVerify) {
+      complexity = '위험 기준과 검증 리포트를 함께 설계하면 운영 후 복기가 쉬워집니다';
+      product    = `${scopeLabel} Guard + Report 조합`;
+      duration   = '리스크 기준 확정 후 테스트';
+    } else if (hasRisk) {
+      complexity = '보유 종목, 손절선, 일일 손실한도 같은 제한 기준을 먼저 정합니다';
+      product    = `${scopeLabel} 리스크 관리 조합`;
+      duration   = 'MyQuant Guard 검토';
+    } else if (hasVerify) {
+      complexity = '과거 데이터와 모의운영으로 전략 특성을 먼저 확인합니다';
+      product    = `${scopeLabel} 검증·기록 조합`;
+      duration   = 'MyQuant Test 검토';
+    } else if (hasNotify) {
+      complexity = '조건 감시와 알림 채널, 주문 전 승인 방식을 먼저 설계합니다';
+      product    = `${scopeLabel} 알림·승인 조합`;
+      duration   = '알림형 테스트부터 시작';
+    } else if (hasWatch) {
+      complexity = '가격, 거래량, 지표, 시간 조건을 시스템이 확인할 수 있게 정리합니다';
+      product    = `${scopeLabel} 조건 감시 조합`;
+      duration   = '주문 없이 감시부터 시작';
+    } else if (hasConnect) {
+      complexity = '연결 가능한 거래소나 증권사, 데이터 범위와 권한을 먼저 확인합니다';
+      product    = `${scopeLabel} 연결 진단 조합`;
+      duration   = '연결 가능성 진단';
+    } else {
+      complexity = '선택한 항목을 기준으로 진단 후 범위를 정합니다';
+      product    = '상담 후 적합한 시작 방식 추천';
+      duration   = '진단 후 확정';
+    }
+
+    const pct = Math.min(96, 10 + count * 4 + weight * 3);
+
     if (estComplexity)   { estComplexity.textContent  = complexity; }
-    if (estDuration)     { estDuration.textContent    = count ? `약 ${baseDays}일` : '—'; }
+    if (estDuration)     { estDuration.textContent    = duration; }
     if (estProduct)      { estProduct.textContent     = product; }
+    if (estMarket)       { estMarket.textContent      = marketLabel; }
+    if (estCount)        { estCount.textContent       = count + '개'; }
     if (estProgressFill) { estProgressFill.style.width = pct + '%'; }
+
+    moduleNodes.forEach(node => {
+      const key = node.dataset.node;
+      const directlySelected = active.some(option => (option.dataset.node || '').split(',').map(v => v.trim()).includes(key));
+      node.classList.toggle('active', visualNodes.has(key));
+      node.classList.toggle('implied', !directlySelected && key !== 'map' && visualNodes.has(key));
+    });
+
+    if (moduleChipRow) {
+      const chips = ['전략 정리', ...active.map(o => o.dataset.module).filter(Boolean)];
+      moduleChipRow.innerHTML = chips.map(label => `<span>${label}</span>`).join('');
+    }
   }
 
   estimatorOptions.forEach(opt => {
@@ -479,7 +566,7 @@
 
   /* Estimator CTA button */
   document.getElementById('est-cta-btn')?.addEventListener('click', () => {
-    showToast('상담 섹션으로 이동합니다 🤝', '📋');
+    showToast('상담 섹션으로 이동합니다', '상담');
     const target = document.getElementById('consultation-brief') || document.getElementById('contact');
     target?.scrollIntoView({ behavior: 'smooth' });
   });
@@ -508,18 +595,22 @@
   function getConsultationMessage() {
     if (!consultationForm) return '';
     const formData = new FormData(consultationForm);
-    const needs = formData.getAll('needs');
 
     return [
       '[마이퀀트 상담 요청]',
       '',
       `거래 시장: ${formData.get('market') || '미선택'}`,
-      `연동 환경: ${formData.get('platform') || '미선택'}`,
-      `필요 기능: ${needs.length ? needs.join(', ') : '미선택'}`,
+      `거래 환경: ${formData.get('platform') || '미선택'}`,
+      `가장 먼저 필요한 것: ${formData.get('primaryGoal') || '미선택'}`,
+      `보고 싶은 종목: ${formData.get('watchlist') || '상담 시 설명 예정'}`,
       '',
-      `매수 조건: ${formData.get('buyRule') || '상담 시 설명 예정'}`,
-      `매도·손절 기준: ${formData.get('sellRule') || '상담 시 설명 예정'}`,
+      `사고 싶은 기준: ${formData.get('buyRule') || '상담 시 설명 예정'}`,
+      `팔고 싶은 기준: ${formData.get('sellRule') || '상담 시 설명 예정'}`,
+      `손절 기준: ${formData.get('stopLoss') || '미입력'}`,
+      `처음 희망 방식: ${formData.get('startMode') || '미입력'}`,
+      `예상 예산: ${formData.get('budget') || '미입력'}`,
       '',
+      `추가 설명: ${formData.get('memo') || '없음'}`,
       `연락 방법: ${formData.get('contactMethod') || '미입력'}`
     ].join('\n');
   }
@@ -529,10 +620,10 @@
     if (!consultationForm.reportValidity()) return;
 
     const formData = new FormData(consultationForm);
-    const subject = `[마이퀀트 상담 요청] ${formData.get('market')} / ${formData.get('platform')}`;
+    const subject = `[마이퀀트 상담 요청] ${formData.get('market')} / ${formData.get('primaryGoal')}`;
     const body = getConsultationMessage();
     window.location.href = `mailto:betterpsh@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    showToast('상담 내용이 이메일 본문으로 정리됩니다', '📧');
+    showToast('상담 내용이 이메일 본문으로 정리됩니다', '메일');
   });
 
   consultCopyBtn?.addEventListener('click', async () => {
@@ -558,25 +649,25 @@
 
   /* CTA button toasts */
   document.getElementById('hero-cta-primary')?.addEventListener('click', () => {
-    showToast('제품 소개 섹션으로 이동합니다', '📦');
+    showToast('상담 작성으로 이동합니다', '상담');
   });
   document.getElementById('nav-cta-btn')?.addEventListener('click', () => {
-    showToast('상담 섹션으로 이동합니다', '🤝');
+    showToast('상담 섹션으로 이동합니다', '상담');
   });
   document.getElementById('cta-email-btn')?.addEventListener('click', () => {
-    showToast('betterpsh@gmail.com으로 이메일 앱을 엽니다', '📧');
+    showToast('betterpsh@gmail.com으로 이메일 앱을 엽니다', '메일');
   });
   document.getElementById('cta-phone-btn')?.addEventListener('click', () => {
-    showToast('010-4752-8421로 전화 앱을 엽니다', '☎');
+    showToast('010-4752-8421로 전화 앱을 엽니다', '전화');
   });
   document.getElementById('cta-kakao-btn')?.addEventListener('click', () => {
-    showToast('카카오톡 오픈채팅으로 연결합니다', '💬');
+    showToast('카카오톡 오픈채팅으로 연결합니다', '톡');
   });
   document.getElementById('quick-phone-btn')?.addEventListener('click', () => {
-    showToast('010-4752-8421로 전화 앱을 엽니다', '☎');
+    showToast('010-4752-8421로 전화 앱을 엽니다', '전화');
   });
   document.getElementById('quick-kakao-btn')?.addEventListener('click', () => {
-    showToast('카카오톡 오픈채팅으로 연결합니다', '💬');
+    showToast('카카오톡 오픈채팅으로 연결합니다', '톡');
   });
   document.getElementById('quick-form-btn')?.addEventListener('click', () => {
     showToast('상담 작성으로 이동합니다', '✎');
