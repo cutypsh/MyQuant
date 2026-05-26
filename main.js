@@ -536,7 +536,7 @@
     const pct = Math.min(96, 10 + count * 4 + weight * 3);
 
     /* 실시간 모듈 조립 견적 가격 계산 */
-    const basePrice = 190000; // 전략 조건표 기본 설계 비용 19만 원
+    const basePrice = 90000; // 전략 조건표 기본 설계 비용 9만 원
     let totalPrice = 0;
     const activeWithPrice = active.filter(o => o.dataset.price && parseInt(o.dataset.price, 10) > 0);
     
