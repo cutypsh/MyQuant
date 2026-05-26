@@ -1463,7 +1463,7 @@ h2 {
   object-fit: contain;
   object-position: center;
   border-radius: 6px;
-  background: #fff;
+  background: #01091e;
   box-shadow: 0 12px 28px rgba(15,23,42,0.12);
   transition: transform 0.4s var(--ease-out);
 }
@@ -2245,6 +2245,51 @@ h2 {
 }
 
 .est-value.highlight { color: var(--primary); }
+
+/* ── 실시간 조립 견적 컨테이너 ── */
+.est-price-container {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(20,184,166,0.06));
+  border: 1px solid rgba(37,99,235,0.15);
+}
+
+.est-value.highlight-price {
+  font-size: clamp(22px, 2.8vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.35s var(--ease-out);
+}
+
+/* ── 모듈 버튼 가격 뱃지 ── */
+.est-badge-price {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 7px;
+  margin-left: 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  background: rgba(37,99,235,0.10);
+  color: var(--primary);
+  border: 1px solid rgba(37,99,235,0.16);
+  vertical-align: middle;
+  transition: background 0.22s ease, color 0.22s ease;
+  white-space: nowrap;
+}
+
+.est-option.active .est-badge-price {
+  background: rgba(255,255,255,0.22);
+  color: #fff;
+  border-color: rgba(255,255,255,0.28);
+}
+
+
 
 .est-progress-track {
   width: 100%;

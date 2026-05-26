@@ -439,6 +439,7 @@
   const estProgressFill  = document.getElementById('est-progress-fill');
   const estMarket        = document.getElementById('est-market');
   const estCount         = document.getElementById('est-count');
+  const estPrice         = document.getElementById('est-price');
   const moduleNodes      = document.querySelectorAll('.module-node[data-node]');
   const moduleChipRow    = document.getElementById('module-chip-row');
 
@@ -534,12 +535,32 @@
 
     const pct = Math.min(96, 10 + count * 4 + weight * 3);
 
+    /* 실시간 모듈 조립 견적 가격 계산 */
+    const basePrice = 190000; // 전략 조건표 기본 설계 비용 19만 원
+    let totalPrice = 0;
+    const activeWithPrice = active.filter(o => o.dataset.price && parseInt(o.dataset.price, 10) > 0);
+    
+    if (activeWithPrice.length > 0) {
+      totalPrice = basePrice + active.reduce((s, o) => s + parseInt(o.dataset.price || '0', 10), 0);
+    } else if (active.length > 0) {
+      totalPrice = basePrice;
+    } else {
+      totalPrice = 0;
+    }
+
     if (estComplexity)   { estComplexity.textContent  = complexity; }
     if (estDuration)     { estDuration.textContent    = duration; }
     if (estProduct)      { estProduct.textContent     = product; }
     if (estMarket)       { estMarket.textContent      = marketLabel; }
     if (estCount)        { estCount.textContent       = count + '개'; }
     if (estProgressFill) { estProgressFill.style.width = pct + '%'; }
+    if (estPrice) {
+      if (totalPrice === 0) {
+        estPrice.textContent = "0원";
+      } else {
+        estPrice.textContent = (totalPrice / 10000) + "만 원";
+      }
+    }
 
     moduleNodes.forEach(node => {
       const key = node.dataset.node;
