@@ -156,8 +156,8 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./style.css?v=20260525-10" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css?v=20260527-1" />
 </head>
 <body id="top">
   <a href="#main-content" class="skip-link">본문으로 바로가기</a>
@@ -249,7 +249,7 @@
             "이럴 때 사고, 이럴 때 팔고 싶다"는 기준만 설명해주세요.
             마이퀀트가 그 기준을 시스템이 확인할 수 있는 조건으로 정리하고,
             조건 감시·알림·손절선 관리·주문 보조
-            시스템으로 구현합니다. 처음에는 자동 주문 없이 알림과 테스트부터 시작할 수 있습니다.
+            시스템으로 구현합니다. 시작은 자동 주문 없이 알림과 테스트부터 할 수 있습니다.
           </p>
 
           <div class="hero-actions">
@@ -265,6 +265,7 @@
           <p class="hero-note">
             <span class="hero-note-icon">안내</span>
             마이퀀트는 수익을 보장하지 않으며, 고객이 정한 기준을 놓치지 않도록 감시·알림·기록을 돕습니다.
+            또한 가상자산 거래소, 중개업자, 보관업자, 지갑사업자가 아니며 고객의 가상자산을 보관·수탁·이전하지 않습니다.
           </p>
         </div>
 
@@ -1003,8 +1004,8 @@
             <div class="package-card-top">
               <span>주문 연동</span>
             </div>
-            <h3>자동 주문 연동</h3>
-            <p>주요 거래소(업비트, 빗썸) 또는 증권사(키움, 한투) API를 연결하여 자동으로 주문합니다.</p>
+            <h3>주문 API 연결</h3>
+            <p>고객이 직접 정한 조건과 승인 절차에 따라 주문 보조 흐름을 구성합니다. 주문 실행 여부와 최종 투자 판단은 고객이 결정합니다.</p>
             <div class="package-price"><strong>19만 원</strong><em>부터</em></div>
             <ul class="package-tiers">
               <li><b>반자동 주문 보조</b><span>19만 원</span><small>신호 발생 시 한 번의 승인으로 자동 주문</small></li>
@@ -1621,19 +1622,35 @@
 
   <footer>
     <div class="container footer-inner">
-      <div class="footer-logo">
-        <span class="footer-logo-mark" aria-hidden="true">
-          <img src="./asset/CI.png" alt="" />
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="footer-logo-mark" aria-hidden="true">
+            <img src="./asset/CI.png" alt="" />
+          </span>
+          <span>마이퀀트 <small>MyQuant</small></span>
+        </div>
+        <p class="footer-description">
+          매매 기준 정리, 조건 감시, 알림, 리스크관리, 백테스트, 주문 보조 시스템을
+          상담 범위에 맞춰 단계적으로 구성합니다.
+        </p>
+      </div>
+      <nav class="footer-links" aria-label="푸터 링크">
+        <span class="footer-link-row footer-link-main">
+          <a href="#about">회사소개</a>
+          <a href="#products">기능·상품</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">상담문의</a>
         </span>
-        <span>마이퀀트 <small>MyQuant</small></span>
+        <span class="footer-link-row footer-link-legal">
+          <a href="./privacy.html">개인정보처리방침</a>
+          <a href="./terms.html">서비스 이용조건</a>
+          <a href="./risk-disclaimer.html">면책 및 위험고지</a>
+        </span>
+      </nav>
+      <div class="footer-bottom">
+        <span>© 2026 MyQuant. All rights reserved.</span>
+        <span>마이퀀트는 투자수익을 보장하지 않으며, 모든 투자 판단과 결과에 대한 책임은 이용자에게 있습니다.</span>
       </div>
-      <div class="footer-links">
-        <a href="#about">회사소개</a>
-        <a href="#products">기능·상품</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact">상담문의</a>
-      </div>
-      <span style="color:var(--muted);font-size:13px;">© 2026 MyQuant. All rights reserved.</span>
     </div>
   </footer>
 
