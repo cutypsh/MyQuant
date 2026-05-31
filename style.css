@@ -440,8 +440,14 @@ h1 {
 }
 
 .hero-type-line {
-  min-height: 2.15em;
+  min-height: 1.1em;
   max-width: none;
+  color: transparent;
+  background: linear-gradient(110deg, var(--primary) 10%, var(--primary-2) 50%, var(--accent) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
 }
 
 .hero strong {
@@ -1184,6 +1190,14 @@ h2 {
   margin: -18px 0 18px;
 }
 
+.package-ladder-compact {
+  margin-bottom: 22px;
+}
+
+.package-ladder-compact .package-card {
+  min-height: 0;
+}
+
 .package-card {
   position: relative;
   min-width: 0;
@@ -1253,7 +1267,7 @@ h2 {
 
 .package-price strong {
   color: #0f766e;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 900;
 }
 
@@ -1502,6 +1516,44 @@ h2 {
   font-weight: 900;
   flex-shrink: 0;
   font-size: 13px;
+}
+
+.module-card {
+  border-color: rgba(37,99,235,0.11);
+}
+
+.module-card .product-body {
+  padding: 22px 24px 24px;
+}
+
+.module-card-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.module-card-head h3 {
+  min-width: 0;
+  color: var(--heading);
+  font-size: 21px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.module-code {
+  display: inline-grid;
+  place-items: center;
+  min-width: 58px;
+  min-height: 34px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(37,99,235,0.09);
+  border: 1px solid rgba(37,99,235,0.16);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .product-tag {

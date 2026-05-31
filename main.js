@@ -228,12 +228,12 @@
   const tradeMessages = [
     { msg: '[감시] BTC RSI(14) 28.3 진입 (과매도 구간)', type: 'info' },
     { msg: '[알림] 업비트 BTC 분할매수 후보 확인 요청', type: 'buy' },
-    { msg: '[승인] 매수 주문 대기 — 0.012 BTC', type: 'buy' },
+	    { msg: '[확인] 매수 주문 대기 — 0.012 BTC', type: 'buy' },
     { msg: '[감시] ETH 볼린저 하단 터치 감지', type: 'info' },
     { msg: '[알림] 익절 목표 +8.5% 도달 — 매도 확인 요청', type: 'sell' },
     { msg: '[기록] 빗썸 BTC 매도 후보 저장 완료', type: 'sell' },
     { msg: '[감시] MACD 골든크로스 신호 발생', type: 'info' },
-    { msg: '[알림] 한투 삼성전자 조건 충족 — 승인 대기', type: 'buy' },
+	    { msg: '[알림] 한투 삼성전자 조건 충족 — 확인 대기', type: 'buy' },
   ];
 
   let logIdx = 0;
@@ -292,12 +292,12 @@
   /* ════════════════════════════════════
      8. TYPING ANIMATION (Hero H1)
      ════════════════════════════════════ */
-  const phrases = [
-    '매매 알림 시스템부터 시작할 수 있습니다.',
-    '조건 감시 시스템부터 시작할 수 있습니다.',
-    '리스크 관리 도구부터 시작할 수 있습니다.',
-    '주문 보조 화면부터 시작할 수 있습니다.',
-  ];
+	  const phrases = [
+	    '투자 기준 조건표부터 시작할 수 있습니다.',
+	    '조건 감시와 알림부터 시작할 수 있습니다.',
+	    '사전 점검과 기록으로 확인할 수 있습니다.',
+	    '확인 후 주문 보조로 확장할 수 있습니다.',
+	  ];
 
   const typingTarget = document.getElementById('typing-target');
   if (typingTarget) {
@@ -344,68 +344,6 @@
     heroEl.style.backgroundPositionY = `calc(50% + ${window.scrollY * 0.1}px)`;
   }
   window.addEventListener('scroll', onParallax, { passive: true });
-
-  /* ════════════════════════════════════
-     10. PRODUCT FILTER TABS
-     ════════════════════════════════════ */
-  const filterTabs  = document.querySelectorAll('.filter-tab');
-  const productCards = document.querySelectorAll('.product-card');
-
-  filterTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      filterTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-
-      const filter = tab.dataset.filter;
-      let idx = 0;
-      productCards.forEach(card => {
-        const categories = (card.dataset.category || '').split(/\s+/);
-        const show = filter === 'all' || categories.includes(filter);
-        if (show) {
-          card.classList.remove('hidden');
-          setTimeout(() => card.classList.add('visible'), idx * 65);
-          idx++;
-        } else {
-          card.classList.add('hidden');
-          card.classList.remove('visible');
-        }
-      });
-
-      const labels = {
-        all: '전체',
-        coin: '코인',
-        stock: '국내주식',
-        alert: '알림',
-        monitoring: '모니터링',
-        analysis: '분석·복기',
-        module: '모듈 조합',
-        automation: '자동화'
-      };
-      showToast((labels[filter] || filter) + ' 기능을 표시합니다', '검색');
-    });
-  });
-
-  /* Initial product card visibility */
-  const productObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.06 });
-  productCards.forEach(c => productObserver.observe(c));
-
-  /* Keyboard navigation for filter tabs */
-  const tabList = document.getElementById('filter-tabs');
-  if (tabList) {
-    tabList.addEventListener('keydown', e => {
-      const tabs = [...tabList.querySelectorAll('.filter-tab')];
-      const idx  = tabs.indexOf(document.activeElement);
-      if (idx === -1) return;
-      if (e.key === 'ArrowRight') { tabs[(idx + 1) % tabs.length].focus(); e.preventDefault(); }
-      if (e.key === 'ArrowLeft')  { tabs[(idx - 1 + tabs.length) % tabs.length].focus(); e.preventDefault(); }
-      if (e.key === 'Enter' || e.key === ' ') { tabs[idx].click(); e.preventDefault(); }
-    });
-  }
 
   /* ════════════════════════════════════
      11. FAQ ACCORDION
@@ -495,37 +433,37 @@
     const hasConnect = groups.has('connect') || markets.size > 0;
 
     let complexity, product, duration;
-    if (count === 0) {
-      complexity = '먼저 코인인지 국내주식인지, 어떤 조건을 놓치고 싶은지 정합니다';
-      product    = '전략 조건표만 선택된 상태';
-      duration   = 'Map 단계부터 시작';
-    } else if (hasOrder) {
-      complexity = '주문 기능은 감시, 알림, 승인, 리스크 기준을 확인한 뒤 적용 여부를 정합니다';
-      product    = `${scopeLabel} 주문 보조 확장 조합`;
-      duration   = '실제 주문 전 모의운영 권장';
-    } else if (hasRisk && hasVerify) {
-      complexity = '위험 기준과 검증 리포트를 함께 설계하면 운영 후 복기가 쉬워집니다';
-      product    = `${scopeLabel} Guard + Report 조합`;
-      duration   = '리스크 기준 확정 후 테스트';
-    } else if (hasRisk) {
-      complexity = '보유 종목, 손절선, 일일 손실한도 같은 제한 기준을 먼저 정합니다';
-      product    = `${scopeLabel} 리스크 관리 조합`;
-      duration   = 'MyQuant Guard 검토';
-    } else if (hasVerify) {
-      complexity = '과거 데이터와 모의운영으로 전략 특성을 먼저 확인합니다';
-      product    = `${scopeLabel} 검증·기록 조합`;
-      duration   = 'MyQuant Test 검토';
-    } else if (hasNotify) {
-      complexity = '조건 감시와 알림 채널, 주문 전 승인 방식을 먼저 설계합니다';
-      product    = `${scopeLabel} 알림·승인 조합`;
-      duration   = '알림형 테스트부터 시작';
-    } else if (hasWatch) {
-      complexity = '가격, 거래량, 지표, 시간 조건을 시스템이 확인할 수 있게 정리합니다';
-      product    = `${scopeLabel} 조건 감시 조합`;
-      duration   = '주문 없이 감시부터 시작';
+	    if (count === 0) {
+	      complexity = '먼저 어떤 투자 기준을 조건표로 만들지 정합니다';
+	      product    = '기준 정리부터 시작';
+	      duration   = '기준 정리부터 시작';
+	    } else if (hasOrder) {
+	      complexity = '주문 기능은 감시, 알림, 고객 확인, 위험 기준을 점검한 뒤 적용 여부를 정합니다';
+	      product    = `${scopeLabel} 확인 후 주문 보조`;
+	      duration   = '실제 주문 전 모의운영 권장';
+	    } else if (hasRisk && hasVerify) {
+	      complexity = '위험 기준과 점검 보고서를 함께 설계하면 운영 후 복기가 쉬워집니다';
+	      product    = `${scopeLabel} 위험관리 + 사전 점검`;
+	      duration   = '위험 기준 확정 후 점검';
+	    } else if (hasRisk) {
+	      complexity = '보유 종목, 손절선, 일일 손실한도 같은 제한 기준을 먼저 정합니다';
+	      product    = `${scopeLabel} 위험관리 구성`;
+	      duration   = '위험관리 범위 검토';
+	    } else if (hasVerify) {
+	      complexity = '과거 데이터와 모의운영으로 전략 특성을 먼저 확인합니다';
+	      product    = `${scopeLabel} 사전 점검 + 기록`;
+	      duration   = '점검 범위 검토';
+	    } else if (hasNotify) {
+	      complexity = '조건 감시와 알림 방식, 주문 전 확인 방식을 먼저 설계합니다';
+	      product    = `${scopeLabel} 감시 + 알림`;
+	      duration   = '알림형 점검부터 시작';
+	    } else if (hasWatch) {
+	      complexity = '가격, 거래량, 지표, 시간 조건을 프로그램이 확인할 수 있게 정리합니다';
+	      product    = `${scopeLabel} 조건 감시`;
+	      duration   = '주문 없이 감시부터 시작';
     } else if (hasConnect) {
       complexity = '연결 가능한 거래소나 증권사, 데이터 범위와 권한을 먼저 확인합니다';
-      product    = `${scopeLabel} 연결 진단 조합`;
+	      product    = `${scopeLabel} 연결 가능성 확인`;
       duration   = '연결 가능성 진단';
     } else {
       complexity = '선택한 항목을 기준으로 진단 후 범위를 정합니다';
@@ -535,7 +473,7 @@
 
     const pct = Math.min(96, 10 + count * 4 + weight * 3);
 
-    /* 실시간 모듈 조립 견적 가격 계산 */
+	    /* 선택 기능 기준 예상 금액 계산 */
     const basePrice = 90000; // 전략 조건표 기본 설계 비용 9만 원
     let totalPrice = 0;
     const activeWithPrice = active.filter(o => o.dataset.price && parseInt(o.dataset.price, 10) > 0);
