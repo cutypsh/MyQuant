@@ -112,7 +112,7 @@
   const navObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
+        const id = entry.target.dataset.navSection || entry.target.getAttribute('id');
         navLinks.forEach(link => {
           link.classList.toggle('active', link.getAttribute('href') === '#' + id);
         });
@@ -120,7 +120,7 @@
     });
   }, { rootMargin: '-40% 0px -55% 0px' });
 
-  document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
+  document.querySelectorAll('section[id], section[data-nav-section]').forEach(s => navObserver.observe(s));
 
   /* ════════════════════════════════════
      6. FLOATING PARTICLES ENGINE
@@ -170,180 +170,6 @@
     drawParticles();
     window.addEventListener('resize', () => { resize(); particles = makeParticles(); });
   }
-
-  /* ════════════════════════════════════
-     7. HERO LIVE MONITOR
-        — real-time price ticker + canvas mini-chart + trade log
-     ════════════════════════════════════ */
-  const livePriceEl   = document.getElementById('live-price');
-  const miniChart     = document.getElementById('hero-mini-chart');
-  const dashLogsEl    = document.getElementById('dash-logs');
-
-  let btcPrice   = 97_850_000;
-  const history  = Array.from({ length: 30 }, () => btcPrice + (Math.random() - 0.5) * 800_000);
-  let lastPrice  = btcPrice;
-
-  function drawMiniChart() {
-    if (!miniChart) return;
-    const ctx = miniChart.getContext('2d');
-    const w   = miniChart.width  = miniChart.parentElement.clientWidth;
-    const h   = miniChart.height = miniChart.parentElement.clientHeight;
-    ctx.clearRect(0, 0, w, h);
-
-    const min   = Math.min(...history);
-    const max   = Math.max(...history);
-    const range = max - min || 1;
-    const getX  = i   => (w / (history.length - 1)) * i;
-    const getY  = val => h - 10 - ((val - min) / range) * (h - 20);
-
-    /* Grid lines */
-    ctx.strokeStyle = 'rgba(37,99,235,0.07)';
-    ctx.lineWidth   = 1;
-    [0.25, 0.5, 0.75].forEach(t => {
-      ctx.beginPath();
-      ctx.moveTo(0, h * t);
-      ctx.lineTo(w, h * t);
-      ctx.stroke();
-    });
-
-    /* Line */
-    ctx.beginPath();
-    ctx.moveTo(getX(0), getY(history[0]));
-    history.forEach((v, i) => { if (i > 0) ctx.lineTo(getX(i), getY(v)); });
-    const isUp = history[history.length - 1] >= history[0];
-    ctx.strokeStyle = isUp ? '#16a34a' : '#ef4444';
-    ctx.lineWidth   = 2.5;
-    ctx.lineJoin    = 'round';
-    ctx.stroke();
-
-    /* Fill gradient */
-    ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
-    const grad = ctx.createLinearGradient(0, 0, 0, h);
-    grad.addColorStop(0, isUp ? 'rgba(22,163,74,0.18)' : 'rgba(239,68,68,0.18)');
-    grad.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = grad;
-    ctx.fill();
-  }
-
-  const tradeMessages = [
-    { msg: '[감시] BTC RSI(14) 28.3 진입 (과매도 구간)', type: 'info' },
-    { msg: '[알림] 업비트 BTC 분할매수 후보 확인 요청', type: 'buy' },
-	    { msg: '[확인] 매수 주문 대기 — 0.012 BTC', type: 'buy' },
-    { msg: '[감시] ETH 볼린저 하단 터치 감지', type: 'info' },
-    { msg: '[알림] 익절 목표 +8.5% 도달 — 매도 확인 요청', type: 'sell' },
-    { msg: '[기록] 빗썸 BTC 매도 후보 저장 완료', type: 'sell' },
-    { msg: '[감시] MACD 골든크로스 신호 발생', type: 'info' },
-	    { msg: '[알림] 한투 삼성전자 조건 충족 — 확인 대기', type: 'buy' },
-  ];
-
-  let logIdx = 0;
-  function appendLog() {
-    if (!dashLogsEl) return;
-    const entry   = tradeMessages[logIdx % tradeMessages.length];
-    logIdx++;
-    const now     = new Date();
-    const timeStr = now.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-    const row = document.createElement('div');
-    row.className = 'log-row';
-    row.innerHTML = `
-      <span class="log-time">${timeStr}</span>
-      <span class="log-msg ${entry.type}">${entry.msg}</span>
-      <span class="log-tag ${entry.type}">${entry.type === 'buy' ? '매수' : entry.type === 'sell' ? '매도' : '감시'}</span>
-    `;
-    dashLogsEl.appendChild(row);
-    if (dashLogsEl.children.length > 3) dashLogsEl.removeChild(dashLogsEl.firstChild);
-  }
-
-  function tickPrice() {
-    const diff = (Math.random() - 0.48) * 260_000;
-    btcPrice  += diff;
-    history.shift();
-    history.push(btcPrice);
-
-    if (livePriceEl) {
-      const formatted = Math.floor(btcPrice).toLocaleString('ko-KR');
-      livePriceEl.textContent = formatted + ' KRW';
-      livePriceEl.classList.toggle('up',   diff >= 0);
-      livePriceEl.classList.toggle('down', diff < 0);
-    }
-
-    /* Update mini footer stats */
-    const changeEl  = document.getElementById('monitor-change');
-    const volumeEl  = document.getElementById('monitor-volume');
-    const countEl   = document.getElementById('monitor-orders');
-    const pct       = (((btcPrice - lastPrice) / lastPrice) * 100).toFixed(2);
-    if (changeEl) { changeEl.textContent = (diff >= 0 ? '+' : '') + pct + '%'; changeEl.className = 'mf-value ' + (diff >= 0 ? 'green' : 'red'); }
-    if (volumeEl) volumeEl.textContent = (2841 + Math.floor(Math.random() * 200)).toLocaleString() + ' BTC';
-    if (countEl)  countEl.textContent  = (127 + Math.floor(Math.random() * 20)) + '건';
-
-    drawMiniChart();
-    if (Math.random() < 0.3) appendLog();
-  }
-
-  /* Kick off monitor */
-  setTimeout(() => {
-    drawMiniChart();
-    appendLog();
-    setInterval(tickPrice, 2200);
-    setInterval(appendLog, 4000);
-  }, 400);
-
-  /* ════════════════════════════════════
-     8. TYPING ANIMATION (Hero H1)
-     ════════════════════════════════════ */
-	  const phrases = [
-	    '투자 기준 조건표부터 시작할 수 있습니다.',
-	    '조건 감시와 알림부터 시작할 수 있습니다.',
-	    '사전 점검과 기록으로 확인할 수 있습니다.',
-	    '확인 후 주문 보조로 확장할 수 있습니다.',
-	  ];
-
-  const typingTarget = document.getElementById('typing-target');
-  if (typingTarget) {
-    typingTarget.textContent = phrases[0];
-    let phraseIdx = 0, charIdx = phrases[0].length, deleting = false;
-
-    /* Blinking cursor */
-    const cursor = document.createElement('span');
-    cursor.className = 'typing-cursor';
-    typingTarget.after(cursor);
-
-    function type() {
-      const current = phrases[phraseIdx];
-      if (deleting) {
-        charIdx--;
-        typingTarget.textContent = current.slice(0, charIdx);
-        if (charIdx <= 0) {
-          deleting  = false;
-          phraseIdx = (phraseIdx + 1) % phrases.length;
-          setTimeout(type, 420);
-          return;
-        }
-      } else {
-        charIdx++;
-        typingTarget.textContent = current.slice(0, charIdx);
-        if (charIdx >= current.length) {
-          setTimeout(() => { deleting = true; type(); }, 1800);
-          return;
-        }
-      }
-      setTimeout(type, deleting ? 38 : 62);
-    }
-    setTimeout(() => { deleting = true; type(); }, 1700);
-  }
-
-  /* ════════════════════════════════════
-     9. PARALLAX (Hero background)
-     ════════════════════════════════════ */
-  const heroEl = document.querySelector('.hero');
-  function onParallax() {
-    if (!heroEl) return;
-    const rect = heroEl.getBoundingClientRect();
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    heroEl.style.backgroundPositionY = `calc(50% + ${window.scrollY * 0.1}px)`;
-  }
-  window.addEventListener('scroll', onParallax, { passive: true });
 
   /* ════════════════════════════════════
      11. FAQ ACCORDION
@@ -438,9 +264,9 @@
 	      product    = '기준 정리부터 시작';
 	      duration   = '기준 정리부터 시작';
 	    } else if (hasOrder) {
-	      complexity = '주문 기능은 감시, 알림, 고객 확인, 위험 기준을 점검한 뒤 적용 여부를 정합니다';
-	      product    = `${scopeLabel} 확인 후 주문 보조`;
-	      duration   = '실제 주문 전 모의운영 권장';
+	      complexity = '조건 확인 후 매수는 감시, 알림, 고객 확인, 위험 기준을 점검한 뒤 적용 범위를 정합니다';
+	      product    = `${scopeLabel} 조건 확인 후 매수`;
+	      duration   = '매수 후 모니터링 권장';
 	    } else if (hasRisk && hasVerify) {
 	      complexity = '위험 기준과 점검 보고서를 함께 설계하면 운영 후 복기가 쉬워집니다';
 	      product    = `${scopeLabel} 위험관리 + 사전 점검`;
@@ -550,6 +376,458 @@
   /* Consultation brief form */
   const consultationForm = document.getElementById('consultation-form');
   const consultCopyBtn = document.getElementById('consult-copy-btn');
+  const marketSelect = consultationForm?.querySelector('select[name="market"]');
+  const platformSelect = consultationForm?.querySelector('select[name="platform"]');
+
+  function syncPlatformOptions() {
+    if (!marketSelect || !platformSelect) return;
+
+    const market = marketSelect.value;
+    const hiddenByMarket = {
+      '국내주식': new Set(['업비트', '빗썸']),
+      '코인': new Set(['키움증권', '한국투자증권'])
+    };
+    const blocked = hiddenByMarket[market] || new Set();
+
+    Array.from(platformSelect.options).forEach(option => {
+      const shouldHide = option.value !== '' && blocked.has(option.value);
+      option.hidden = shouldHide;
+      option.disabled = shouldHide;
+    });
+
+    if (blocked.has(platformSelect.value)) {
+      platformSelect.value = '';
+    }
+  }
+
+  syncPlatformOptions();
+  marketSelect?.addEventListener('change', syncPlatformOptions);
+
+  const watchlistPicker = consultationForm?.querySelector('[data-watchlist-picker]');
+  const watchlistValueInput = document.getElementById('watchlist-value');
+  const watchlistSelectedEl = document.getElementById('watchlist-selected');
+  const watchlistCustomRow = document.getElementById('watchlist-custom-row');
+  const watchlistCustomInput = document.getElementById('watchlist-custom-input');
+  const watchlistCustomAdd = document.getElementById('watchlist-custom-add');
+  const watchlistSelections = new Set();
+  const conditionSummaryValueInput = document.getElementById('condition-summary-value');
+  const conditionSummaryText = document.getElementById('condition-summary-text');
+  let conditionSummaryReady = false;
+
+  function getComboLabel(values) {
+    if (values.length === 0) return '선택';
+    if (values.length <= 2) return values.join(', ');
+    return `${values.slice(0, 2).join(', ')} 외 ${values.length - 2}개`;
+  }
+
+  function closeMultiCombo(combo) {
+    const trigger = combo.querySelector('[data-combo-toggle]');
+    const panel = combo.querySelector('[data-combo-panel]');
+    combo.classList.remove('is-open');
+    trigger?.setAttribute('aria-expanded', 'false');
+    if (panel) panel.hidden = true;
+  }
+
+  function openMultiCombo(combo) {
+    document.querySelectorAll('[data-multi-combo].is-open').forEach(openCombo => {
+      if (openCombo !== combo) closeMultiCombo(openCombo);
+    });
+
+    const trigger = combo.querySelector('[data-combo-toggle]');
+    const panel = combo.querySelector('[data-combo-panel]');
+    combo.classList.add('is-open');
+    trigger?.setAttribute('aria-expanded', 'true');
+    if (panel) panel.hidden = false;
+  }
+
+  function updateMultiComboLabel(picker, values) {
+    const label = picker?.querySelector('[data-combo-label]');
+    const trigger = picker?.querySelector('[data-combo-toggle]');
+    const text = getComboLabel(values);
+    if (label) label.textContent = text;
+    trigger?.setAttribute('title', values.join(', ') || '선택');
+  }
+
+  consultationForm?.querySelectorAll('[data-multi-combo]').forEach(combo => {
+    const trigger = combo.querySelector('[data-combo-toggle]');
+    const panel = combo.querySelector('[data-combo-panel]');
+
+    trigger?.addEventListener('click', event => {
+      event.stopPropagation();
+      if (combo.classList.contains('is-open')) closeMultiCombo(combo);
+      else openMultiCombo(combo);
+    });
+
+    panel?.addEventListener('click', event => {
+      event.stopPropagation();
+    });
+  });
+
+  document.addEventListener('click', event => {
+    if (event.target instanceof Element && event.target.closest('[data-multi-combo]')) return;
+    document.querySelectorAll('[data-multi-combo].is-open').forEach(closeMultiCombo);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('[data-multi-combo].is-open').forEach(closeMultiCombo);
+  });
+
+  function renderWatchlistSelections() {
+    if (!watchlistPicker || !watchlistValueInput || !watchlistSelectedEl) return;
+
+    const values = Array.from(watchlistSelections);
+    watchlistValueInput.value = values.join(', ');
+    updateMultiComboLabel(watchlistPicker, values);
+
+    watchlistPicker.querySelectorAll('[data-watchlist-option]').forEach(button => {
+      const active = watchlistSelections.has(button.dataset.watchlistOption);
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+
+    if (values.length === 0) {
+      watchlistSelectedEl.textContent = '선택된 항목이 없습니다.';
+      if (conditionSummaryReady) updateConditionSummary();
+      return;
+    }
+
+    watchlistSelectedEl.replaceChildren(...values.map(value => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.dataset.watchlistRemove = value;
+      chip.textContent = `${value} ×`;
+      chip.setAttribute('aria-label', `${value} 선택 해제`);
+      return chip;
+    }));
+    if (conditionSummaryReady) updateConditionSummary();
+  }
+
+  function addWatchlistValue(value) {
+    const cleanValue = value.trim();
+    if (!cleanValue) return;
+    watchlistSelections.add(cleanValue);
+    renderWatchlistSelections();
+  }
+
+  function addCustomWatchlistValue() {
+    if (!(watchlistCustomInput instanceof HTMLInputElement)) return;
+    addWatchlistValue(watchlistCustomInput.value);
+    watchlistCustomInput.value = '';
+    watchlistCustomInput.focus();
+  }
+
+  if (watchlistPicker) {
+    watchlistPicker.querySelectorAll('[data-watchlist-option]').forEach(button => {
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('click', () => {
+        const value = button.dataset.watchlistOption;
+        if (!value) return;
+        if (watchlistSelections.has(value)) watchlistSelections.delete(value);
+        else watchlistSelections.add(value);
+        renderWatchlistSelections();
+      });
+    });
+
+    watchlistPicker.querySelector('[data-watchlist-custom]')?.addEventListener('click', () => {
+      if (!watchlistCustomRow) return;
+      watchlistCustomRow.hidden = !watchlistCustomRow.hidden;
+      if (!watchlistCustomRow.hidden) watchlistCustomInput?.focus();
+    });
+
+    watchlistSelectedEl?.addEventListener('click', event => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const removeButton = target.closest('[data-watchlist-remove]');
+      if (!removeButton) return;
+      watchlistSelections.delete(removeButton.dataset.watchlistRemove);
+      renderWatchlistSelections();
+    });
+
+    watchlistCustomAdd?.addEventListener('click', addCustomWatchlistValue);
+    watchlistCustomInput?.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        addCustomWatchlistValue();
+      }
+    });
+
+    renderWatchlistSelections();
+  }
+
+  const buyRulePicker = consultationForm?.querySelector('[data-buy-rule-picker]');
+  const buyRuleValueInput = document.getElementById('buy-rule-value');
+  const buyRuleSelectedEl = document.getElementById('buy-rule-selected');
+  const buyRuleSelections = new Set();
+
+  function renderBuyRuleSelections() {
+    if (!buyRulePicker || !buyRuleValueInput || !buyRuleSelectedEl) return;
+
+    const values = Array.from(buyRuleSelections);
+    buyRuleValueInput.value = values.join(', ');
+    updateMultiComboLabel(buyRulePicker, values);
+
+    buyRulePicker.querySelectorAll('[data-buy-rule-option]').forEach(button => {
+      const active = buyRuleSelections.has(button.dataset.buyRuleOption);
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+
+    if (values.length === 0) {
+      buyRuleSelectedEl.textContent = '선택된 항목이 없습니다.';
+      if (conditionSummaryReady) updateConditionSummary();
+      return;
+    }
+
+    buyRuleSelectedEl.replaceChildren(...values.map(value => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.dataset.buyRuleRemove = value;
+      chip.textContent = `${value} ×`;
+      chip.setAttribute('aria-label', `${value} 선택 해제`);
+      return chip;
+    }));
+    if (conditionSummaryReady) updateConditionSummary();
+  }
+
+  if (buyRulePicker) {
+    buyRulePicker.querySelectorAll('[data-buy-rule-option]').forEach(button => {
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('click', () => {
+        const value = button.dataset.buyRuleOption;
+        if (!value) return;
+        if (buyRuleSelections.has(value)) buyRuleSelections.delete(value);
+        else buyRuleSelections.add(value);
+        renderBuyRuleSelections();
+      });
+    });
+
+    buyRuleSelectedEl?.addEventListener('click', event => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const removeButton = target.closest('[data-buy-rule-remove]');
+      if (!removeButton) return;
+      buyRuleSelections.delete(removeButton.dataset.buyRuleRemove);
+      renderBuyRuleSelections();
+    });
+
+    renderBuyRuleSelections();
+  }
+
+  const sellRulePicker = consultationForm?.querySelector('[data-sell-rule-picker]');
+  const sellRuleValueInput = document.getElementById('sell-rule-value');
+  const sellRuleSelectedEl = document.getElementById('sell-rule-selected');
+  const sellRuleSelections = new Set();
+
+  function renderSellRuleSelections() {
+    if (!sellRulePicker || !sellRuleValueInput || !sellRuleSelectedEl) return;
+
+    const values = Array.from(sellRuleSelections);
+    sellRuleValueInput.value = values.join(', ');
+    updateMultiComboLabel(sellRulePicker, values);
+
+    sellRulePicker.querySelectorAll('[data-sell-rule-option]').forEach(button => {
+      const active = sellRuleSelections.has(button.dataset.sellRuleOption);
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+
+    if (values.length === 0) {
+      sellRuleSelectedEl.textContent = '선택된 항목이 없습니다.';
+      if (conditionSummaryReady) updateConditionSummary();
+      return;
+    }
+
+    sellRuleSelectedEl.replaceChildren(...values.map(value => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.dataset.sellRuleRemove = value;
+      chip.textContent = `${value} ×`;
+      chip.setAttribute('aria-label', `${value} 선택 해제`);
+      return chip;
+    }));
+    if (conditionSummaryReady) updateConditionSummary();
+  }
+
+  if (sellRulePicker) {
+    sellRulePicker.querySelectorAll('[data-sell-rule-option]').forEach(button => {
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('click', () => {
+        const value = button.dataset.sellRuleOption;
+        if (!value) return;
+        if (sellRuleSelections.has(value)) sellRuleSelections.delete(value);
+        else sellRuleSelections.add(value);
+        renderSellRuleSelections();
+      });
+    });
+
+    sellRuleSelectedEl?.addEventListener('click', event => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const removeButton = target.closest('[data-sell-rule-remove]');
+      if (!removeButton) return;
+      sellRuleSelections.delete(removeButton.dataset.sellRuleRemove);
+      renderSellRuleSelections();
+    });
+
+    renderSellRuleSelections();
+  }
+
+  const watchlistTargetPhrases = new Map([
+    ['관심 종목', '관심 종목'],
+    ['보유 종목', '보유 종목'],
+    ['최근 본 종목', '최근 본 종목'],
+    ['코스피', '코스피 종목'],
+    ['코스닥', '코스닥 종목'],
+    ['ETF', 'ETF'],
+    ['테마주', '테마주']
+  ]);
+
+  const watchlistFilterPhrases = new Map([
+    ['골든 크로스', '골든 크로스가 나타난'],
+    ['정배열', '정배열 흐름을 보이는'],
+    ['상한가 따라잡기', '상한가에 근접하거나 강하게 움직이는'],
+    ['실시간 뉴스', '실시간 뉴스가 나온'],
+    ['급등주', '단기 급등 흐름을 보이는'],
+    ['거래대금 상위', '거래대금이 증가한'],
+    ['상승률 상위', '상승률이 높은'],
+    ['신고가 근접', '신고가에 가까운'],
+    ['낙폭 과대', '최근 많이 하락한'],
+    ['외국인 순매수', '외국인이 순매수하는'],
+    ['기관 순매수', '기관이 순매수하는']
+  ]);
+
+  const buyConditionStems = new Map([
+    ['전고점 돌파', '전고점을 돌파하'],
+    ['거래량 증가', '거래량이 늘어나'],
+    ['거래대금 증가', '거래대금이 늘어나'],
+    ['눌림목 반등', '눌림목에서 반등하'],
+    ['특정 가격 도달', '정해 둔 가격에 도달하'],
+    ['신고가 돌파', '신고가를 돌파하'],
+    ['20일선 돌파', '20일선을 돌파하'],
+    ['골든크로스', '골든크로스가 나오'],
+    ['RSI 반등', 'RSI가 반등하'],
+    ['볼린저밴드 하단 반등', '볼린저밴드 하단에서 반등하'],
+    ['외국인/기관 매수 동반', '외국인과 기관의 매수가 함께 들어오'],
+    ['절반 매수', '정해 둔 조건에서 절반만 먼저 매수하']
+  ]);
+
+  const sellConditionStems = new Map([
+    ['+3% 익절', '3% 상승하'],
+    ['+5% 익절', '5% 상승하'],
+    ['+10% 익절', '10% 상승하'],
+    ['목표가 도달', '목표가에 도달하'],
+    ['-2% 손절', '2% 하락하'],
+    ['-3% 손절', '3% 하락하'],
+    ['-5% 손절', '5% 하락하'],
+    ['지지선 이탈', '지지선을 이탈하'],
+    ['20일선 이탈', '20일선을 이탈하'],
+    ['분할 익절', '수익 구간에 들어오'],
+    ['트레일링 스탑', '고점 대비 되돌림이 나오'],
+    ['장 마감 전 정리', '장 마감 시간이 가까워지'],
+    ['손절가 도달', '손절가에 도달하'],
+    ['전저점 이탈', '전저점을 이탈하'],
+    ['데드크로스', '데드크로스가 나오'],
+    ['보유 기간 만료', '정해 둔 보유 기간이 지나'],
+    ['절반 익절', '수익 구간에서 절반을 정리하'],
+    ['조건 미충족 시 정리', '정해 둔 조건을 충족하지 못하']
+  ]);
+
+  function hasFinalConsonant(text) {
+    const lastChar = Array.from(text.trim()).pop();
+    if (!lastChar) return false;
+    const code = lastChar.charCodeAt(0) - 0xac00;
+    return code >= 0 && code <= 11171 && code % 28 !== 0;
+  }
+
+  function particle(text, withFinal, withoutFinal) {
+    return hasFinalConsonant(text) ? withFinal : withoutFinal;
+  }
+
+  function joinNounList(values) {
+    if (values.length <= 1) return values[0] || '';
+    if (values.length === 2) {
+      return `${values[0]}${particle(values[0], '과', '와')} ${values[1]}`;
+    }
+    const last = values[values.length - 1];
+    const head = values.slice(0, -1).join(', ');
+    const beforeLast = values[values.length - 2];
+    return `${head}${particle(beforeLast, '과', '와')} ${last}`;
+  }
+
+  function joinPhraseList(values) {
+    return values.join(', ');
+  }
+
+  function joinConditionStems(stems) {
+    if (stems.length <= 1) return stems[0] ? `${stems[0]}면` : '';
+    const firstParts = stems.slice(0, -1).map(stem => `${stem}거나`);
+    return `${firstParts.join(' ')} ${stems[stems.length - 1]}면`;
+  }
+
+  function createWatchlistSentence() {
+    const targets = [];
+    const filters = [];
+
+    Array.from(watchlistSelections).forEach(value => {
+      if (watchlistFilterPhrases.has(value)) {
+        filters.push(watchlistFilterPhrases.get(value));
+        return;
+      }
+      targets.push(watchlistTargetPhrases.get(value) || value);
+    });
+
+    const targetText = joinNounList(targets);
+    const filterText = joinPhraseList(filters);
+
+    if (targetText && filterText) {
+      return `${targetText} 중 ${filterText} 종목을 보고 싶어요.`;
+    }
+
+    if (targetText) {
+      return `${targetText}${particle(targetText, '을', '를')} 보고 싶어요.`;
+    }
+
+    if (filterText) {
+      return `${filterText} 종목을 보고 싶어요.`;
+    }
+
+    return '';
+  }
+
+  function createTradeRuleSentence() {
+    const buyCondition = joinConditionStems(
+      Array.from(buyRuleSelections).map(value => buyConditionStems.get(value) || value)
+    );
+    const sellCondition = joinConditionStems(
+      Array.from(sellRuleSelections).map(value => sellConditionStems.get(value) || value)
+    );
+
+    if (buyCondition && sellCondition) {
+      return `${buyCondition} 사고, ${sellCondition} 알림을 받고 싶어요.`;
+    }
+
+    if (buyCondition) {
+      return `${buyCondition} 사고 싶어요.`;
+    }
+
+    if (sellCondition) {
+      return `${sellCondition} 알림을 받고 싶어요.`;
+    }
+
+    return '';
+  }
+
+  function updateConditionSummary() {
+    if (!conditionSummaryText || !conditionSummaryValueInput) return;
+
+    const summary = [createWatchlistSentence(), createTradeRuleSentence()].filter(Boolean).join(' ');
+    conditionSummaryText.textContent = summary || '칩을 선택하면 상담 문장이 자동으로 정리됩니다.';
+    conditionSummaryValueInput.value = summary;
+  }
+
+  conditionSummaryReady = true;
+  updateConditionSummary();
 
   function getConsultationMessage() {
     if (!consultationForm) return '';
@@ -562,6 +840,7 @@
       `거래 환경: ${formData.get('platform') || '미선택'}`,
       `가장 먼저 필요한 것: ${formData.get('primaryGoal') || '미선택'}`,
       `보고 싶은 종목: ${formData.get('watchlist') || '상담 시 설명 예정'}`,
+      `자동 정리 문장: ${formData.get('conditionSummary') || '상담 시 설명 예정'}`,
       '',
       `사고 싶은 기준: ${formData.get('buyRule') || '상담 시 설명 예정'}`,
       `팔고 싶은 기준: ${formData.get('sellRule') || '상담 시 설명 예정'}`,
@@ -606,9 +885,47 @@
     }
   });
 
+  /* Sample program preview modal */
+  const sampleProgramBtn = document.getElementById('sample-program-btn');
+  const sampleProgramModal = document.getElementById('sample-program-modal');
+  const sampleProgramCloseEls = document.querySelectorAll('[data-sample-modal-close]');
+  let sampleProgramLastFocus = null;
+
+  function closeSampleProgramModal() {
+    if (!sampleProgramModal) return;
+    sampleProgramModal.classList.remove('is-open');
+    sampleProgramModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('mq-sample-modal-open');
+    sampleProgramLastFocus?.focus?.();
+  }
+
+  function openSampleProgramModal() {
+    if (!sampleProgramModal) return;
+    sampleProgramLastFocus = document.activeElement;
+    sampleProgramModal.classList.add('is-open');
+    sampleProgramModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('mq-sample-modal-open');
+    sampleProgramModal.querySelector('.mq-sample-modal-close')?.focus();
+    showToast('샘플 프로그램 화면을 엽니다', '보기');
+  }
+
+  sampleProgramBtn?.addEventListener('click', openSampleProgramModal);
+  sampleProgramCloseEls.forEach(button => {
+    button.addEventListener('click', closeSampleProgramModal);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && sampleProgramModal?.classList.contains('is-open')) {
+      closeSampleProgramModal();
+    }
+  });
+
   /* CTA button toasts */
   document.getElementById('hero-cta-primary')?.addEventListener('click', () => {
-    showToast('상담 작성으로 이동합니다', '상담');
+    showToast('프로그램 섹션으로 이동합니다', '보기');
+  });
+  document.getElementById('hero-cta-secondary')?.addEventListener('click', () => {
+    showToast('상담 섹션으로 이동합니다', '상담');
   });
   document.getElementById('nav-cta-btn')?.addEventListener('click', () => {
     showToast('상담 섹션으로 이동합니다', '상담');

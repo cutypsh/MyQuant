@@ -353,8 +353,7 @@ header.scrolled {
       rgba(247,250,255,0.95) 34%,
       rgba(247,250,255,0.72) 52%,
       rgba(247,250,255,0.18) 74%,
-      rgba(247,250,255,0.02) 100%),
-    url("./asset/first.png");
+      rgba(247,250,255,0.02) 100%);
   background-size: cover;
   background-position: center right;
 }
@@ -465,22 +464,6 @@ h1 {
   100% { background-position: 0% 50%; }
 }
 
-/* Typing cursor */
-.typing-cursor {
-  display: inline-block;
-  width: 3px; height: 0.85em;
-  background: var(--primary);
-  border-radius: 2px;
-  margin-left: 2px;
-  vertical-align: middle;
-  animation: cursor-blink 0.8s step-end infinite;
-}
-
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
-
 .hero-desc {
   max-width: 620px;
   color: var(--muted);
@@ -564,175 +547,6 @@ h1 {
   font-size: 11px;
   font-weight: 900;
 }
-
-/* ── HERO VISUAL: LIVE MONITOR ── */
-.hero-visual-space {
-  min-height: 500px;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.live-monitor {
-  width: 100%;
-  max-width: 480px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(37,99,235,0.14);
-  border-radius: 8px;
-  box-shadow:
-    0 30px 70px rgba(37,99,235,0.14),
-    0 0 0 1px rgba(255,255,255,0.8) inset;
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  animation: monitor-float 5s ease-in-out infinite;
-}
-
-@keyframes monitor-float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
-}
-
-.monitor-topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(15,23,42,0.07);
-  background: rgba(37,99,235,0.03);
-}
-
-.monitor-title {
-  font-size: 12.5px;
-  font-weight: 800;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: rgba(34,197,94,0.1);
-  border: 1px solid rgba(34,197,94,0.25);
-  color: #15803d;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.live-badge::before {
-  content: "";
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--success);
-  animation: live-pulse 1.4s ease-in-out infinite;
-}
-
-@keyframes live-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
-  50%       { box-shadow: 0 0 0 4px rgba(34,197,94,0); }
-}
-
-.monitor-price {
-  font-size: 18px;
-  font-weight: 900;
-  font-family: monospace;
-  color: var(--primary);
-  letter-spacing: 0;
-  transition: color 0.3s ease;
-}
-
-.monitor-price.up   { color: #16a34a; }
-.monitor-price.down { color: var(--danger); }
-
-/* Mini chart area */
-.monitor-chart {
-  height: 140px;
-  padding: 0 16px;
-  position: relative;
-}
-
-#hero-mini-chart {
-  width: 100%;
-  height: 100%;
-}
-
-/* Trade log */
-.monitor-logs {
-  background: rgba(7,20,38,0.04);
-  border-top: 1px solid rgba(15,23,42,0.06);
-  padding: 12px 16px;
-  height: 118px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.log-row {
-  display: grid;
-  grid-template-columns: 72px 1fr auto;
-  align-items: center;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(15,23,42,0.05);
-  font-size: 11.5px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: log-slide 0.3s var(--ease-out) forwards;
-}
-
-.log-row:last-child { border-bottom: none; }
-
-@keyframes log-slide { to { opacity: 1; transform: translateY(0); } }
-
-.log-time  { color: var(--muted); font-family: monospace; }
-.log-msg   { color: var(--heading); font-weight: 600; flex: 1; }
-.log-msg.buy  { color: #16a34a; }
-.log-msg.sell { color: var(--danger); }
-.log-tag {
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-.log-tag.buy  { background: rgba(22,163,74,0.1);  color: #16a34a; }
-.log-tag.sell { background: rgba(239,68,68,0.1);  color: var(--danger); }
-.log-tag.info { background: rgba(37,99,235,0.1);  color: var(--primary); }
-
-/* Monitor footer */
-.monitor-footer {
-  padding: 12px 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-  border-top: 1px solid rgba(15,23,42,0.06);
-}
-
-.mf-stat { display: flex; flex-direction: column; gap: 2px; }
-
-.mf-label {
-  font-size: 10.5px;
-  color: var(--muted);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.mf-value {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--heading);
-  font-family: monospace;
-}
-
-.mf-value.green { color: #16a34a; }
 
 /* ════════════════════════════════════
    STATS DARK BAND
@@ -3185,12 +2999,10 @@ footer {
         rgba(247,250,255,0.99)  0%,
         rgba(247,250,255,0.94) 42%,
         rgba(247,250,255,0.78) 70%,
-        rgba(247,250,255,0.36) 100%),
-      url("./asset/first.png");
+        rgba(247,250,255,0.36) 100%);
     background-position: center bottom;
   }
   .hero-copy       { max-width: 640px; margin-left: 0; }
-  .hero-visual-space { display: none; }
   .product-grid    { grid-template-columns: 1fr; }
 }
 
