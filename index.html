@@ -68,7 +68,7 @@
     }
   </script>
   <link rel="stylesheet" href="./style.css?v=20260527-1" />
-  <link rel="stylesheet" href="./home-v2.css?v=20260602-8" />
+  <link rel="stylesheet" href="./home-v2.css?v=20260603-11" />
 </head>
 <body id="top">
   <a href="#main-content" class="skip-link">본문으로 바로가기</a>
@@ -170,8 +170,8 @@
             <h2>기준보다 어려운 건,<br />그 기준을 지키는 일입니다</h2>
             <p>
               개인투자자는 자기만의 기준이 있어도<br />
-              장중 감시, 감정 통제, 기록 관리를<br />
-              꾸준히 이어가기 어렵습니다.
+              바쁜 일상 속에서 급변하는 시장을 계속 지켜보기 어렵습니다.<br />
+              마이퀀트는 정한 기준을 놓치지 않도록 감시하고 기록합니다.
             </p>
           </div>
           <div class="mq-photo-wrap reveal reveal-delay-1" data-image-slot="investor-workspace">
@@ -237,31 +237,27 @@
             </span>
             <span>투자 기준 입력 예시</span>
           </div>
-          <strong class="mq-rule-sentence">"전고점 돌파와 거래량 증가가 함께 나오면 매수 후보로 알려줘.<br />매수 후에는 익절·손절·장 마감 기준도 감시해줘"</strong>
+          <div class="mq-rule-phrase" aria-label="전고점 돌파와 거래량 증가가 발생하면 매수 후보 알림을 받고, 매수 후에는 익절 손절 장 마감 기준까지 감시합니다.">
+            <div class="mq-rule-phrase-line">
+              <span class="mq-rule-pill">전고점 돌파</span>
+              <span class="mq-rule-operator" aria-hidden="true">+</span>
+              <span class="mq-rule-pill">거래량 증가</span>
+              <span class="mq-rule-operator" aria-hidden="true">→</span>
+              <span class="mq-rule-pill mq-rule-pill-result">매수 후보 알림</span>
+            </div>
+            <p class="mq-rule-phrase-sub">
+              <span>매수 후</span>
+              <span class="mq-rule-pill mq-rule-pill-soft">익절</span>
+              <span class="mq-rule-pill mq-rule-pill-soft mq-rule-pill-loss">손절</span>
+              <span class="mq-rule-pill mq-rule-pill-soft mq-rule-pill-close">장 마감</span>
+              <span>기준까지 감시합니다.</span>
+            </p>
+          </div>
           <div class="mq-condition-flow" aria-label="조건으로 바꾸면">
             <span class="mq-condition-label">조건으로 바꾸면</span>
-            <div class="mq-simple-rule-flow">
-              <div class="mq-simple-rule-row">
-                <span class="mq-simple-stage">매수 전</span>
-                <span class="mq-simple-rule-chip">
-                  <b>전고점 돌파 + 거래량 증가</b>
-                  <small>매수 후보 조건</small>
-                </span>
-                <span class="mq-simple-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
-                <span class="mq-simple-result">매수 후보 알림</span>
-                <span class="mq-simple-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
-                <span class="mq-simple-result">매수 전 확인</span>
-              </div>
-              <div class="mq-simple-rule-row">
-                <span class="mq-simple-stage">매수 후</span>
-                <span class="mq-simple-rule-chip">
-                  <b>+5% 익절 · -3% 손절 · 장 마감</b>
-                  <small>보유 중 감시 기준</small>
-                </span>
-                <span class="mq-simple-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
-                <span class="mq-simple-result mq-simple-result-exit">매도·청산 알림</span>
-              </div>
-            </div>
+            <figure class="mq-condition-image">
+              <img src="./ass/point.png" alt="전고점 돌파와 거래량 증가 조건을 이미지로 정리한 예시" loading="lazy" decoding="async" />
+            </figure>
           </div>
         </div>
 
