@@ -140,7 +140,7 @@
             감시, 알림, 기록, 위험관리 즉 필요한 기능만 골라<span class="mq-mobile-break">나만의 투자 프로그램으로 만듭니다.</span>
           </p>
           <div class="mq-hero-actions">
-            <a href="#program" class="mq-btn mq-btn-primary" id="hero-cta-primary">프로그램 살펴보기</a>
+            <a href="#process" class="mq-btn mq-btn-primary" id="hero-cta-primary">프로그램 살펴보기</a>
             <a href="#contact" class="mq-btn mq-btn-secondary" id="hero-cta-secondary">상담 문의하기</a>
           </div>
           <div class="mq-hero-trust" aria-label="서비스 신뢰 안내">
@@ -280,12 +280,12 @@
             </span>
             <span class="mq-timeline-copy"><strong>매수 조건 감시</strong><i>Watch</i></span>
           </article>
-          <article class="mq-flow-step mq-timeline-node" title="조건이 충족되면 매수 후보로 알려줍니다." aria-label="3. 매수 후보 알림. Alert. 조건이 충족되면 매수 후보로 알려줍니다.">
+          <article class="mq-flow-step mq-timeline-node" title="조건이 충족되면 매수 후보로 알려줍니다." aria-label="3. 매수 후보 알림. Alarm. 조건이 충족되면 매수 후보로 알려줍니다.">
             <span class="mq-timeline-dot">
               <b>3</b>
               <span class="mq-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.3 21a2 2 0 0 0 3.4 0" /><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" /><path d="M4 2C2.8 3 2 4.4 2 6" /><path d="M22 6c0-1.6-.8-3-2-4" /></svg></span>
             </span>
-            <span class="mq-timeline-copy"><strong>매수 후보 알림</strong><i>Alert</i></span>
+            <span class="mq-timeline-copy"><strong>매수 후보 알림</strong><i>Alarm</i></span>
           </article>
           <article class="mq-flow-step mq-timeline-node" title="진입 전 손절, 익절, 비중 기준을 확인하고 사용자가 최종 판단합니다." aria-label="4. 매수 전 확인. Guard + Approve. 진입 전 손절, 익절, 비중 기준을 확인하고 사용자가 최종 판단합니다.">
             <span class="mq-timeline-dot">
@@ -301,12 +301,12 @@
             </span>
             <span class="mq-timeline-copy"><strong>보유 중 모니터링</strong><i>Watch + Guard</i></span>
           </article>
-          <article class="mq-flow-step mq-timeline-node" title="+5% 익절, -3% 손절, 장 마감 전 정리 같은 매도 조건을 알려줍니다." aria-label="6. 매도/청산 조건 알림. Alert + Guard. +5% 익절, -3% 손절, 장 마감 전 정리 같은 매도 조건을 알려줍니다.">
+          <article class="mq-flow-step mq-timeline-node" title="+5% 익절, -3% 손절, 장 마감 전 정리 같은 매도 조건을 알려줍니다." aria-label="6. 매도/청산 조건 알림. Alarm + Guard. +5% 익절, -3% 손절, 장 마감 전 정리 같은 매도 조건을 알려줍니다.">
             <span class="mq-timeline-dot">
               <b>6</b>
               <span class="mq-step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m23 18-9.5-9.5-5 5L1 6" /><path d="M17 18h6v-6" /></svg></span>
             </span>
-            <span class="mq-timeline-copy"><strong>매도/청산 조건 알림</strong><i>Alert + Guard</i></span>
+            <span class="mq-timeline-copy"><strong>매도/청산 조건 알림</strong><i>Alarm + Guard</i></span>
           </article>
           <article class="mq-flow-step mq-timeline-node" title="매수·매도 판단과 결과를 기록하고 다음 기준을 개선합니다." aria-label="7. 기록·복기·개선. Journal + Assist. 매수·매도 판단과 결과를 기록하고 다음 기준을 개선합니다.">
             <span class="mq-timeline-dot">
@@ -399,7 +399,7 @@
                   <div class="mq-preview-module-flow" aria-label="모듈 연결 구조">
                     <span>Map</span><b aria-hidden="true">→</b>
                     <span>Watch</span><b aria-hidden="true">→</b>
-                    <span>Alert</span><b aria-hidden="true" class="mq-preview-desktop-only">→</b>
+                    <span>Alarm</span><b aria-hidden="true" class="mq-preview-desktop-only">→</b>
                     <span class="mq-preview-desktop-only">Guard</span><b aria-hidden="true" class="mq-preview-desktop-only">→</b>
                     <span class="mq-preview-desktop-only">Journal</span>
                   </div>
@@ -451,7 +451,7 @@
                       <div class="mq-preview-card-head"><span><svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>실행 로그 콘솔</span></div>
                       <pre><code>14:32:08 WATCH 24 symbols scanned
 14:32:09 SIGNAL Samsung breakout=True
-14:32:10 ALERT push queued
+14:32:10 ALARM push queued
 14:32:12 GUARD risk check passed
 14:32:18 JOURNAL event saved
 14:33:00 STATUS system healthy</code></pre>
@@ -474,7 +474,7 @@
             <article>
               <b>2</b>
               <strong>모듈 연결</strong>
-              <p>Map, Watch, Alert, Guard 등 필요한 모듈을 기준에 맞게 연결합니다.</p>
+              <p>Map, Watch, Alarm, Guard 등 필요한 모듈을 사용자가 원하는 기준에 맞게 연결합니다.</p>
             </article>
             <article>
               <b>3</b>
@@ -862,7 +862,7 @@
       <div class="mq-sample-modal-head">
         <div>
           <p>샘플 프로그램</p>
-          <h2 id="sample-program-title">고객 전용 투자 운영 프로그램 화면 예시</h2>
+          <h2 id="sample-program-title">고객 전용 투자 운영 PC 프로그램 화면 예시</h2>
         </div>
         <button type="button" class="mq-sample-modal-close" data-sample-modal-close aria-label="샘플 이미지 닫기">×</button>
       </div>
@@ -903,6 +903,6 @@
     </div>
   </footer>
 
-  <script src="./main.js?v=20260602-2" defer></script>
+  <script src="./main.js?v=20260603-1" defer></script>
 </body>
 </html>

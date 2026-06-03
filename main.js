@@ -922,7 +922,7 @@
 
   /* CTA button toasts */
   document.getElementById('hero-cta-primary')?.addEventListener('click', () => {
-    showToast('프로그램 섹션으로 이동합니다', '보기');
+    showToast('시스템 흐름 섹션으로 이동합니다', '보기');
   });
   document.getElementById('hero-cta-secondary')?.addEventListener('click', () => {
     showToast('상담 섹션으로 이동합니다', '상담');
