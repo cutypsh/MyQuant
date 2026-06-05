@@ -192,7 +192,7 @@
         item.classList.add('active');
         trigger.setAttribute('aria-expanded', 'true');
         const icon = trigger.querySelector('.faq-icon');
-        if (icon) icon.textContent = '−';
+        if (icon) icon.textContent = '+';
       }
     });
   });
@@ -943,14 +943,14 @@
   document.getElementById('cta-kakao-btn')?.addEventListener('click', () => {
     showToast('카카오톡 오픈채팅으로 연결합니다', '톡');
   });
-  document.getElementById('quick-phone-btn')?.addEventListener('click', () => {
-    showToast('010-4752-8421로 전화 앱을 엽니다', '전화');
+  document.getElementById('quick-email-btn')?.addEventListener('click', () => {
+    showToast('betterpsh@gmail.com으로 이메일 앱을 엽니다', '메일');
   });
   document.getElementById('quick-kakao-btn')?.addEventListener('click', () => {
     showToast('카카오톡 오픈채팅으로 연결합니다', '톡');
   });
   document.getElementById('quick-form-btn')?.addEventListener('click', () => {
-    showToast('상담 작성으로 이동합니다', '✎');
+    showToast('무료진단 작성으로 이동합니다', '진단');
   });
 
   /* ════════════════════════════════════
