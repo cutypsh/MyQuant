@@ -21,7 +21,11 @@
       progressBar.style.width = pct + '%';
       progressBar.setAttribute('aria-valuenow', Math.round(pct));
     }
-    if (header)      header.classList.toggle('scrolled', scrollTop > 40);
+    if (header) {
+      const isScrolled = scrollTop > 8;
+      header.classList.toggle('scrolled', isScrolled);
+      header.classList.toggle('is-scrolled', isScrolled);
+    }
     if (backToTop)   backToTop.classList.toggle('visible', scrollTop > 380);
   }
 
