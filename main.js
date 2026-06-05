@@ -183,12 +183,16 @@
       document.querySelectorAll('.faq-item').forEach(f => {
         f.classList.remove('active');
         f.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+        const icon = f.querySelector('.faq-icon');
+        if (icon) icon.textContent = '+';
       });
 
       /* Toggle this one */
       if (!isActive) {
         item.classList.add('active');
         trigger.setAttribute('aria-expanded', 'true');
+        const icon = trigger.querySelector('.faq-icon');
+        if (icon) icon.textContent = '−';
       }
     });
   });
@@ -834,16 +838,16 @@
     const formData = new FormData(consultationForm);
 
     return [
-      '[마이퀀트 상담 요청]',
+      '[마이퀀트 무료진단 신청]',
       '',
       `거래 시장: ${formData.get('market') || '미선택'}`,
       `거래 환경: ${formData.get('platform') || '미선택'}`,
       `가장 먼저 필요한 것: ${formData.get('primaryGoal') || '미선택'}`,
-      `보고 싶은 종목: ${formData.get('watchlist') || '상담 시 설명 예정'}`,
-      `자동 정리 문장: ${formData.get('conditionSummary') || '상담 시 설명 예정'}`,
+      `보고 싶은 종목: ${formData.get('watchlist') || '무료진단 시 설명 예정'}`,
+      `자동 정리 문장: ${formData.get('conditionSummary') || '무료진단 시 설명 예정'}`,
       '',
-      `사고 싶은 기준: ${formData.get('buyRule') || '상담 시 설명 예정'}`,
-      `팔고 싶은 기준: ${formData.get('sellRule') || '상담 시 설명 예정'}`,
+      `사고 싶은 기준: ${formData.get('buyRule') || '무료진단 시 설명 예정'}`,
+      `팔고 싶은 기준: ${formData.get('sellRule') || '무료진단 시 설명 예정'}`,
       `손절 기준: ${formData.get('stopLoss') || '미입력'}`,
       `처음 희망 방식: ${formData.get('startMode') || '미입력'}`,
       `예상 예산: ${formData.get('budget') || '미입력'}`,
@@ -858,10 +862,10 @@
     if (!consultationForm.reportValidity()) return;
 
     const formData = new FormData(consultationForm);
-    const subject = `[마이퀀트 상담 요청] ${formData.get('market')} / ${formData.get('primaryGoal')}`;
+    const subject = `[마이퀀트 무료진단 신청] ${formData.get('market')} / ${formData.get('primaryGoal')}`;
     const body = getConsultationMessage();
     window.location.href = `mailto:betterpsh@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    showToast('상담 내용이 이메일 본문으로 정리됩니다', '메일');
+    showToast('무료진단 신청 내용이 이메일 본문으로 정리됩니다', '메일');
   });
 
   consultCopyBtn?.addEventListener('click', async () => {
@@ -870,7 +874,7 @@
 
     try {
       await navigator.clipboard.writeText(body);
-      showToast('상담 내용이 복사되었습니다', '✓');
+      showToast('무료진단 신청 내용이 복사되었습니다', '✓');
     } catch {
       const fallback = document.createElement('textarea');
       fallback.value = body;
@@ -881,7 +885,7 @@
       fallback.select();
       document.execCommand('copy');
       fallback.remove();
-      showToast('상담 내용이 복사되었습니다', '✓');
+      showToast('무료진단 신청 내용이 복사되었습니다', '✓');
     }
   });
 
@@ -922,7 +926,7 @@
 
   /* CTA button toasts */
   document.getElementById('hero-cta-primary')?.addEventListener('click', () => {
-    showToast('시스템 흐름 섹션으로 이동합니다', '보기');
+    showToast('프로그램 흐름 섹션으로 이동합니다', '보기');
   });
   document.getElementById('hero-cta-secondary')?.addEventListener('click', () => {
     showToast('상담 섹션으로 이동합니다', '상담');
