@@ -284,7 +284,7 @@
 	      product    = `${scopeLabel} 위험관리 구성`;
 	      duration   = '위험관리 범위 검토';
 	    } else if (hasVerify) {
-	      complexity = '과거 데이터와 모의운영으로 전략 특성을 먼저 확인합니다';
+	      complexity = '과거 데이터와 모의운영으로 기준 특성을 먼저 확인합니다';
 	      product    = `${scopeLabel} 사전 점검 + 기록`;
 	      duration   = '점검 범위 검토';
 	    } else if (hasNotify) {
@@ -308,7 +308,7 @@
     const pct = Math.min(96, 10 + count * 4 + weight * 3);
 
 	    /* 선택 기능 기준 예상 금액 계산 */
-    const basePrice = 90000; // 전략 조건표 기본 설계 비용 9만 원
+    const basePrice = 90000; // 기준 조건표 기본 설계 비용 9만 원
     let totalPrice = 0;
     const activeWithPrice = active.filter(o => o.dataset.price && parseInt(o.dataset.price, 10) > 0);
     
@@ -342,7 +342,7 @@
     });
 
     if (moduleChipRow) {
-      const chips = ['전략 정리', ...active.map(o => o.dataset.module).filter(Boolean)];
+      const chips = ['기준 정리', ...active.map(o => o.dataset.module).filter(Boolean)];
       moduleChipRow.innerHTML = chips.map(label => `<span>${label}</span>`).join('');
     }
   }

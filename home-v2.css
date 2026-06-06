@@ -9482,7 +9482,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 16px;
+  background: linear-gradient(90deg, #eaf2ff 0%, #f8fbff 100%);
+  border: 1px solid #bfdbfe;
   padding: 26px 34px;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
 }
 
 .mq-flow-section .mq-flow-note-single .mq-flow-note-icon {
@@ -9493,7 +9496,23 @@ body {
 
 .mq-flow-section .mq-flow-note-single strong {
   max-width: 760px;
+  color: #475569;
   text-align: left;
+}
+
+.mq-flow-section .mq-flow-note-single .mq-flow-note-primary {
+  color: #0f172a;
+  font-weight: 900;
+}
+
+.mq-flow-section .mq-flow-note-single .mq-flow-note-highlight {
+  color: #2563eb;
+  font-weight: 900;
+}
+
+.mq-flow-section .mq-flow-note-single .mq-flow-note-muted {
+  color: #475569;
+  font-weight: 800;
 }
 
 @media (max-width: 720px) {
@@ -10005,6 +10024,109 @@ body {
   }
 }
 
+/* Program CTA clarity */
+.mq-program-preview-hint {
+  display: none;
+}
+
+.mq-program-preview-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+}
+
+.mq-program-preview-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mq-program-actions .mq-btn:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+@media (max-width: 720px) {
+  .mq-program-preview-hint {
+    display: block;
+    max-width: 320px;
+    margin: 22px auto 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .mq-program-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .mq-program-actions .mq-btn {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .mq-program-actions .mq-btn-secondary {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.1);
+  }
+
+  .mq-program-actions .mq-btn-secondary:hover,
+  .mq-program-actions .mq-btn-secondary:active {
+    background: #dbeafe;
+    border-color: #93c5fd;
+  }
+}
+
+/* Make the rule example label easier to scan. */
+.mq-flow-section .mq-rule-card-head {
+  gap: 14px;
+  color: #1d4ed8;
+  font-size: 21px;
+  font-weight: 950;
+}
+
+.mq-flow-section .mq-rule-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+}
+
+.mq-flow-section .mq-rule-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 2.2;
+}
+
+@media (max-width: 720px) {
+  .mq-flow-section .mq-rule-card-head {
+    gap: 12px;
+    font-size: 19px;
+  }
+
+  .mq-flow-section .mq-rule-icon {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+
+  .mq-flow-section .mq-rule-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 /* Fixed top navigation */
 :root {
   --nav-h: 82px;
@@ -10052,5 +10174,68 @@ html {
 
   .mq-page {
     padding-top: var(--nav-h);
+  }
+}
+
+/* Hero title alignment and mobile containment */
+.mq-hero-copy {
+  width: 100%;
+  max-width: 1180px;
+}
+
+.mq-hero h1 {
+  width: 100%;
+  max-width: 1160px;
+  text-align: center;
+}
+
+.mq-typing-title {
+  justify-items: center;
+  text-align: center;
+}
+
+.mq-type-line {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.mq-title-auto-wrap,
+.mq-title-tail {
+  display: inline;
+}
+
+@media (max-width: 720px) {
+  .mq-hero-copy {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .mq-hero h1 {
+    max-width: 100%;
+    font-size: clamp(34px, 9.2vw, 44px);
+    line-height: 1.15;
+  }
+
+  .mq-type-line {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .mq-title-auto-wrap,
+  .mq-title-tail {
+    display: block;
+  }
+
+  .mq-type-line-two::after {
+    margin-left: 3px;
+  }
+
+  .mq-hero-desc {
+    max-width: 100%;
+    font-size: 15.8px;
+    line-height: 1.72;
   }
 }
