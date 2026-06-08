@@ -896,8 +896,18 @@
   /* Sample program preview modal */
   const sampleProgramBtn = document.getElementById('sample-program-btn');
   const sampleProgramModal = document.getElementById('sample-program-modal');
+  const sampleProgramPreviewTarget = document.getElementById('sample-program-preview-target');
   const sampleProgramCloseEls = document.querySelectorAll('[data-sample-modal-close]');
   let sampleProgramLastFocus = null;
+
+  function mountSampleProgramPreview() {
+    if (!sampleProgramPreviewTarget || sampleProgramPreviewTarget.childElementCount) return;
+    const sourceWindow = document.querySelector('#program-preview .mq-desktop-window');
+    if (!sourceWindow) return;
+    const previewClone = sourceWindow.cloneNode(true);
+    previewClone.classList.add('mq-sample-window');
+    sampleProgramPreviewTarget.appendChild(previewClone);
+  }
 
   function closeSampleProgramModal() {
     if (!sampleProgramModal) return;
@@ -910,6 +920,7 @@
   function openSampleProgramModal() {
     if (!sampleProgramModal) return;
     sampleProgramLastFocus = document.activeElement;
+    mountSampleProgramPreview();
     sampleProgramModal.classList.add('is-open');
     sampleProgramModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('mq-sample-modal-open');
