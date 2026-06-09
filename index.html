@@ -68,7 +68,7 @@
     }
   </script>
   <link rel="stylesheet" href="./style.css?v=20260527-1" />
-  <link rel="stylesheet" href="./home-v2.css?v=20260604-88" />
+  <link rel="stylesheet" href="./home-v2.css?v=20260604-92" />
 </head>
 <body id="top">
   <a href="#main-content" class="skip-link">본문으로 바로가기</a>
@@ -146,24 +146,19 @@
             시장 감시부터 알림, 실행까지<br />
             내 원칙대로 움직입니다.
           </p>
-          <div class="mq-hero-actions">
-            <a href="#process" class="mq-btn mq-btn-primary" id="hero-cta-primary">프로그램 살펴보기</a>
-            <a href="#contact" class="mq-btn mq-btn-secondary" id="hero-cta-secondary">내 프로그램 가능 여부 확인하기</a>
+          <div class="mq-hero-actions mq-hero-choice-actions" aria-label="제작 방식 선택">
+            <a href="#contact" class="mq-hero-choice-card mq-hero-choice-card-request" id="hero-cta-secondary">
+              <span class="mq-hero-choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z" /><path d="M8 9h8" /><path d="M8 13h5" /></svg>
+              </span>
+              <span class="mq-hero-choice-copy">
+                <strong>제작 의뢰하기</strong>
+                <em>내 투자 기준을 알려주시면 맞춤형 프로그램으로 제작해드립니다.</em>
+                <small>제작 가능 여부를 먼저 확인할 수 있습니다.</small>
+              </span>
+            </a>
           </div>
-          <div class="mq-hero-trust" aria-label="서비스 신뢰 안내">
-            <article>
-              <strong><span class="mq-trust-icon" aria-hidden="true">⚙️</span>내가 정한 조건대로 매수·매도</strong>
-              <span>정해둔 조건을 기준으로 감시하고 실행을 보조합니다.</span>
-            </article>
-            <article>
-              <strong><span class="mq-trust-icon" aria-hidden="true">🌙</span>장중에도, 밤에도 자동으로 시장 감시</strong>
-              <span>놓치기 쉬운 조건을 계속 확인하고 필요한 순간 알려드립니다.</span>
-            </article>
-            <article>
-              <strong><span class="mq-trust-icon" aria-hidden="true">🧭</span>감정 없이 계획대로 실행</strong>
-              <span>매수·매도 원칙을 프로그램 흐름으로 정리합니다.</span>
-            </article>
-          </div>
+          <p class="mq-hero-choice-note">제작 가능 여부를 먼저 확인한 뒤 맞춤형 프로그램으로 진행합니다.</p>
         </div>
 
       </div>
@@ -201,41 +196,11 @@
         </div>
 
         <div class="mq-problem-panel reveal reveal-delay-2">
-          <h3>이런 분들에게 필요합니다</h3>
-          <div class="mq-problem-grid">
-            <article tabindex="0">
-              <div class="mq-problem-top">
-                <b>01</b>
-                <i>💼</i>
-              </div>
-              <strong>직장인</strong>
-              <p>장중 매매할 시간이 없다</p>
-            </article>
-            <article tabindex="0">
-              <div class="mq-problem-top">
-                <b>02</b>
-                <i>🕘</i>
-              </div>
-              <strong>전업투자자</strong>
-              <p>24시간 시장 감시가 어렵다</p>
-            </article>
-            <article tabindex="0">
-              <div class="mq-problem-top">
-                <b>03</b>
-                <i>📈</i>
-              </div>
-              <strong>투자 고수</strong>
-              <p>자신만의 기법이 있다</p>
-            </article>
-            <article tabindex="0">
-              <div class="mq-problem-top">
-                <b>04</b>
-                <i>🛡️</i>
-              </div>
-              <strong>초보 투자자</strong>
-              <p>뇌동매매를 줄이고 싶다</p>
-            </article>
-          </div>
+          <h3>투자자가 자주 겪는 문제</h3>
+          <p class="mq-problem-panel-desc">투자 기준은 있어도, 시장을 계속 보고 원칙대로 지키는 일은 쉽지 않습니다.</p>
+          <figure class="mq-problem-card-image">
+            <img src="./asset/card.png" alt="투자자가 자주 겪는 네 가지 문제를 정리한 카드 이미지" loading="lazy" decoding="async" />
+          </figure>
         </div>
       </div>
     </section>
@@ -257,23 +222,27 @@
               <span class="mq-program-case-icon" aria-hidden="true">💼</span>
             </div>
             <h3>직장인 자동매매형</h3>
-            <div class="mq-program-case-condition">
-              <span>예시 조건</span>
-              <p>
-                장중에 직접 볼 수 없어도<br />
-                20일 이동평균선 돌파 시 매수,<br />
-                5% 수익 시 자동 매도
-              </p>
+            <p class="mq-program-case-summary">
+              업무 중에도 조건을 감시하고,<br />
+              알림으로 기회를 놓치지 않습니다.
+            </p>
+            <div class="mq-program-case-preview mq-program-case-preview-work" aria-label="조건 감시와 알림 설정 예시 화면">
+              <svg viewBox="0 0 340 170" role="img">
+                <rect class="mini-screen" x="16" y="16" width="308" height="138" rx="18" />
+                <path class="mini-grid" d="M38 54h190M38 86h190M38 118h190" />
+                <path class="mini-chart" d="M42 112 78 96l34 10 42-38 32 18 38-52" />
+                <circle class="mini-point" cx="224" cy="34" r="6" />
+                <rect class="mini-label" x="210" y="30" width="88" height="30" rx="15" />
+                <text class="mini-label-text" x="254" y="50" text-anchor="middle">조건 감시</text>
+                <rect class="mini-label mini-label-orange" x="210" y="110" width="88" height="30" rx="15" />
+                <text class="mini-label-text mini-label-text-orange" x="254" y="130" text-anchor="middle">알림 설정</text>
+              </svg>
             </div>
-            <div class="mq-program-case-modules">
-              <span>선택한 기능</span>
-              <div>
-                <i>기준 설정</i>
-                <i>매수 조건 감시</i>
-                <i>매도/청산 조건 알림</i>
-              </div>
+            <div class="mq-program-case-tags" aria-label="직장인 자동매매형 특징">
+              <span>#알림매매</span>
+              <span>#조건감시</span>
+              <span>#시간절약</span>
             </div>
-            <strong>→ 자동매매 프로그램 제작</strong>
           </article>
           <article>
             <div class="mq-program-case-top">
@@ -281,23 +250,28 @@
               <span class="mq-program-case-icon" aria-hidden="true">₿</span>
             </div>
             <h3>코인 24시간 감시형</h3>
-            <div class="mq-program-case-condition">
-              <span>예시 조건</span>
-              <p>
-                비트코인 RSI 30 이하 진입 시<br />
-                정해진 금액으로 분할매수
-              </p>
+            <p class="mq-program-case-summary">
+              24시간 쉬지 않고 시장을 감시하고,<br />
+              조건에 맞으면 알림 또는 자동 실행합니다.
+            </p>
+            <div class="mq-program-case-preview mq-program-case-preview-coin" aria-label="코인 24시간 감시 예시 화면">
+              <svg viewBox="0 0 340 170" role="img">
+                <rect class="mini-dark-screen" x="16" y="16" width="308" height="138" rx="18" />
+                <text class="mini-dark-title" x="42" y="48">24H MARKET WATCH</text>
+                <path class="mini-dark-grid" d="M42 78h178M42 110h178" />
+                <path class="mini-coin-chart" d="M44 118 76 102l28 12 34-46 30 16 42-36" />
+                <circle class="mini-coin-point" cx="210" cy="48" r="6" />
+                <rect class="mini-label" x="210" y="30" width="88" height="30" rx="15" />
+                <text class="mini-label-text" x="254" y="50" text-anchor="middle">24H 감시</text>
+                <rect class="mini-label mini-label-orange" x="210" y="110" width="88" height="30" rx="15" />
+                <text class="mini-label-text mini-label-text-orange" x="254" y="130" text-anchor="middle">자동 실행</text>
+              </svg>
             </div>
-            <div class="mq-program-case-modules">
-              <span>선택한 기능</span>
-              <div>
-                <i>기준 설정</i>
-                <i>매수 조건 감시</i>
-                <i>매수 후보 알림</i>
-                <i>보유 중 모니터링</i>
-              </div>
+            <div class="mq-program-case-tags" aria-label="코인 24시간 감시형 특징">
+              <span>#24시간감시</span>
+              <span>#알림</span>
+              <span>#자동실행</span>
             </div>
-            <strong>→ 코인 자동매매 프로그램 제작</strong>
           </article>
           <article>
             <div class="mq-program-case-top">
@@ -305,24 +279,52 @@
               <span class="mq-program-case-icon" aria-hidden="true">🚀</span>
             </div>
             <h3>테마주 조건검색형</h3>
-            <div class="mq-program-case-condition">
-              <span>예시 조건</span>
-              <p>
-                관심 테마 종목을 감시하다가<br />
-                거래량 증가와 가격 돌파 조건이 맞으면 알림 또는 매수
-              </p>
+            <p class="mq-program-case-summary">
+              실시간 조건 검색으로 유망 종목을<br />
+              빠르게 발견할 수 있습니다.
+            </p>
+            <div class="mq-program-case-preview mq-program-case-preview-theme" aria-label="테마주 조건검색 예시 화면">
+              <svg viewBox="0 0 340 170" role="img">
+                <rect class="mini-screen" x="16" y="16" width="308" height="138" rx="18" />
+                <rect class="mini-table-head" x="34" y="34" width="272" height="28" rx="10" />
+                <text class="mini-table-label" x="54" y="53">종목명</text>
+                <text class="mini-table-label" x="158" y="53">등락률</text>
+                <text class="mini-table-label" x="244" y="53">거래량</text>
+                <g class="mini-table-row">
+                  <rect x="34" y="72" width="272" height="24" rx="8" />
+                  <text x="54" y="89">테마A</text>
+                  <text class="mini-red" x="158" y="89">+7.4%</text>
+                  <text x="244" y="89">상위</text>
+                </g>
+                <g class="mini-table-row">
+                  <rect x="34" y="102" width="272" height="24" rx="8" />
+                  <text x="54" y="119">테마B</text>
+                  <text class="mini-orange" x="158" y="119">+4.1%</text>
+                  <text x="244" y="119">증가</text>
+                </g>
+                <rect class="mini-label mini-label-orange" x="210" y="30" width="88" height="30" rx="15" />
+                <text class="mini-label-text mini-label-text-orange" x="254" y="50" text-anchor="middle">조건 검색</text>
+                <rect class="mini-label" x="210" y="110" width="88" height="30" rx="15" />
+                <text class="mini-label-text" x="254" y="130" text-anchor="middle">종목 포착</text>
+              </svg>
             </div>
-            <div class="mq-program-case-modules">
-              <span>선택한 기능</span>
-              <div>
-                <i>기준 설정</i>
-                <i>매수 조건 감시</i>
-                <i>매수 후보 알림</i>
-                <i>매수 전 확인</i>
-              </div>
+            <div class="mq-program-case-tags" aria-label="테마주 조건검색형 특징">
+              <span>#조건검색</span>
+              <span>#테마주</span>
+              <span>#기회발견</span>
             </div>
-            <strong>→ 테마주 자동매매 프로그램 제작</strong>
           </article>
+        </div>
+
+        <div class="mq-program-case-cta reveal reveal-delay-2">
+          <span class="mq-program-case-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z" /><path d="M8 9h8" /><path d="M8 13h5" /></svg>
+          </span>
+          <div>
+            <strong>직접 만들기 어렵다면 MyQuant에 제작을 맡겨보세요.</strong>
+            <p>나의 투자 스타일과 목표에 맞는 맞춤형 프로그램을 제작해드립니다.</p>
+          </div>
+          <a href="#contact" class="mq-program-case-cta-btn">제작 의뢰하기 <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -436,6 +438,7 @@
       </div>
     </section>
 
+    <span id="self-start" class="mq-section-anchor" aria-hidden="true"></span>
     <section class="mq-section mq-system-section mq-program-section" id="guide">
       <div class="mq-container">
         <div class="mq-program-grid">
@@ -647,12 +650,23 @@
         <div class="mq-target-grid reveal reveal-delay-1">
           <article>
             <div class="mq-target-card-head">
+              <span class="mq-target-icon mq-target-icon-purple" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z" /><path d="M8 7h7" /><path d="M8 11h8" /><path d="m8 15 2 2 4-4" /></svg>
+              </span>
+              <strong>초보 투자자</strong>
+            </div>
+            <p class="mq-target-problem"><b>문제 상황</b><span>뇌동매매를 줄이고 정해진 기준대로 투자하고 싶은 분</span></p>
+            <div class="mq-target-help"><b>MyQuant 도움</b><span>매수·매도 기준을 먼저 정리해 원칙 중심으로 투자하도록 돕습니다.</span></div>
+          </article>
+          <article>
+            <div class="mq-target-card-head">
               <span class="mq-target-icon mq-target-icon-blue" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M20.5 11.5h-3a2 2 0 1 1 0-3h3V5a1.5 1.5 0 0 0-1.5-1.5h-5.5v2.8a2.2 2.2 0 1 1-3 0V3.5H5A1.5 1.5 0 0 0 3.5 5v5.5h2.8a2.2 2.2 0 1 1 0 3H3.5V19A1.5 1.5 0 0 0 5 20.5h14A1.5 1.5 0 0 0 20.5 19Z" /></svg>
               </span>
               <strong>직장인 투자자</strong>
             </div>
-            <span>장중에 시장을 계속 볼 수 없는 분</span>
+            <p class="mq-target-problem"><b>문제 상황</b><span>장중에 시장을 계속 볼 수 없는 분</span></p>
+            <div class="mq-target-help"><b>MyQuant 도움</b><span>조건 감시와 알림으로 매매 기회를 놓치지 않도록 돕습니다.</span></div>
           </article>
           <article>
             <div class="mq-target-card-head">
@@ -661,7 +675,8 @@
               </span>
               <strong>전업투자자</strong>
             </div>
-            <span>24시간 시장 감시와 반복 판단이 부담되는 분</span>
+            <p class="mq-target-problem"><b>문제 상황</b><span>24시간 시장 감시와 반복 판단이 부담되는 분</span></p>
+            <div class="mq-target-help"><b>MyQuant 도움</b><span>반복되는 기준 판단을 프로그램 흐름으로 정리합니다.</span></div>
           </article>
           <article>
             <div class="mq-target-card-head">
@@ -670,16 +685,8 @@
               </span>
               <strong>투자 고수</strong>
             </div>
-            <span>자신만의 매매 기준을 프로그램으로 만들고 싶은 분</span>
-          </article>
-          <article>
-            <div class="mq-target-card-head">
-              <span class="mq-target-icon mq-target-icon-purple" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z" /><path d="M8 7h7" /><path d="M8 11h8" /><path d="m8 15 2 2 4-4" /></svg>
-              </span>
-              <strong>초보 투자자</strong>
-            </div>
-            <span>뇌동매매를 줄이고 정해진 기준대로 투자하고 싶은 분</span>
+            <p class="mq-target-problem"><b>문제 상황</b><span>자신만의 매매 기준을 프로그램으로 만들고 싶은 분</span></p>
+            <div class="mq-target-help"><b>MyQuant 도움</b><span>검증된 투자 기준을 실제 작동하는 프로그램으로 구현합니다.</span></div>
           </article>
         </div>
 
@@ -705,7 +712,7 @@
             <img src="./asset/ceo.png" alt="마이퀀트 대표 박상현" loading="lazy" decoding="async" />
             <figcaption>
               <strong>박상현 대표</strong>
-              <span>금융·투자·알고리즘 설계</span>
+              <span>금융·투자 프로그램 설계</span>
             </figcaption>
           </figure>
           <div class="mq-safety-strip reveal reveal-delay-3">
@@ -1070,6 +1077,6 @@
     </div>
   </footer>
 
-  <script src="./main.js?v=20260604-4" defer></script>
+  <script src="./main.js?v=20260604-5" defer></script>
 </body>
 </html>

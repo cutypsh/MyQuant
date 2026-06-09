@@ -940,11 +940,8 @@
   });
 
   /* CTA button toasts */
-  document.getElementById('hero-cta-primary')?.addEventListener('click', () => {
-    showToast('프로그램 흐름 섹션으로 이동합니다', '보기');
-  });
   document.getElementById('hero-cta-secondary')?.addEventListener('click', () => {
-    showToast('상담 섹션으로 이동합니다', '상담');
+    showToast('제작 가능 여부 확인 섹션으로 이동합니다', '의뢰');
   });
   document.getElementById('nav-cta-btn')?.addEventListener('click', () => {
     showToast('상담 섹션으로 이동합니다', '상담');
