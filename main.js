@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════
-   MyQuant — main.js
+   퀀트공방 — main.js
    v3.0 | Premium Interactions
    ════════════════════════════════════════════════════ */
 (() => {
@@ -842,7 +842,7 @@
     const formData = new FormData(consultationForm);
 
     return [
-      '[마이퀀트 무료진단 신청]',
+      '[퀀트공방 무료진단 신청]',
       '',
       `거래 시장: ${formData.get('market') || '미선택'}`,
       `거래 환경: ${formData.get('platform') || '미선택'}`,
@@ -866,7 +866,7 @@
     if (!consultationForm.reportValidity()) return;
 
     const formData = new FormData(consultationForm);
-    const subject = `[마이퀀트 무료진단 신청] ${formData.get('market')} / ${formData.get('primaryGoal')}`;
+    const subject = `[퀀트공방 무료진단 신청] ${formData.get('market')} / ${formData.get('primaryGoal')}`;
     const body = getConsultationMessage();
     window.location.href = `mailto:betterpsh@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     showToast('무료진단 신청 내용이 이메일 본문으로 정리됩니다', '메일');
